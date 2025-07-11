@@ -5,12 +5,14 @@ interface ProjectPageClientProps {
   heroBlock: any
   aboutBlock: any
   posts: any[]
+  pageTitle?: string
 }
 
 export default function ProjectPageClient({
   heroBlock,
   aboutBlock,
   posts,
+  pageTitle,
 }: ProjectPageClientProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
@@ -39,9 +41,11 @@ export default function ProjectPageClient({
       )
     : posts
 
+  const showHero =
+    heroBlock && heroBlock.header && String(heroBlock.header).trim() !== ''
   return (
     <div>
-      {heroBlock && (
+      {showHero ? (
         <div className="mb-8">
           <div className="mb-4 cont">
             <h1 className="text-3xl font-bold">{heroBlock.header}</h1>
@@ -57,7 +61,11 @@ export default function ProjectPageClient({
             )}
           </div>
         </div>
-      )}
+      ) : pageTitle ? (
+        <div className="mb-8 cont">
+          <h1 className="text-3xl font-bold text-white">{pageTitle}</h1>
+        </div>
+      ) : null}
       {aboutBlock && (
         <div className="mb-8">
           <div>{aboutBlock.title}</div>
@@ -66,7 +74,7 @@ export default function ProjectPageClient({
       <div className="cont my-8">
         <div className="flex flex-row flex-wrap gap-2 mb-6">
           <button
-            className={`btn btn-primary ${selectedCategory ? 'btn-outline text-primary border-primary bg-white' : ''}`}
+            className={`btn btn-primary border-white text-white ${selectedCategory ? 'btn-outline text-primary bg-white border-primary' : ''}`}
             onClick={() => setSelectedCategory(null)}
           >
             Все проекты
@@ -74,7 +82,7 @@ export default function ProjectPageClient({
           {uniqueCategories.map((cat) => (
             <button
               key={cat.slug}
-              className={`btn bg-white text-black border border-gray-200 ${selectedCategory === cat.slug ? 'border-primary text-primary' : ''}`}
+              className={`btn bg-white text-black border border-gray-200 ${selectedCategory === cat.slug ? 'border-primary bg-primary border-2 text-primary' : ''}`}
               onClick={() => setSelectedCategory(cat.slug)}
             >
               {cat.name}
@@ -89,23 +97,25 @@ export default function ProjectPageClient({
             <a
               key={post.slug}
               href={`/${post.categories?.edges[0]?.node.slug || 'projects'}/${post.slug}`}
-              className="block border rounded-lg overflow-hidden hover:shadow-lg transition"
+              className="block border rounded-lg overflow-hidden hover:shadow-lg transition relative group"
+              style={{
+                minHeight: '280px',
+                background: post.featuredImage?.node?.link
+                  ? `url(${post.featuredImage.node.link}) center/cover no-repeat`
+                  : '#222',
+              }}
             >
-              {post.featuredImage && (
-                <img
-                  src={post.featuredImage}
-                  alt={post.title}
-                  className="w-full h-48 object-cover"
-                />
-              )}
-              <div className="p-4">
-                <div className="text-lg font-semibold mb-2">{post.title}</div>
-                <div className="text-sm text-gray-500 mb-1">
+              <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition" />
+              <div className="relative z-10 p-4 flex flex-col h-full justify-end">
+                <div className="text-lg font-semibold mb-2 text-white">
+                  {post.title}
+                </div>
+                <div className="text-sm text-gray-200 mb-1">
                   {post.categories?.edges
                     .map((edge: any) => edge.node.name)
                     .join(', ')}
                 </div>
-                <div className="text-xs text-gray-400">{post.date}</div>
+                <div className="text-xs text-gray-300">{post.date}</div>
               </div>
             </a>
           ))}

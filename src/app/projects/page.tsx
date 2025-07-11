@@ -80,9 +80,8 @@ const ProjectsPage = async () => {
     <ProjectPageClient
       heroBlock={heroBlock}
       aboutBlock={aboutBlock}
-      categories={projectCategories}
-      childCategories={childCategories}
       posts={posts}
+      pageTitle={page?.title}
     />
   )
 }
