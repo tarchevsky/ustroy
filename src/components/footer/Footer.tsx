@@ -9,6 +9,7 @@ interface FooterProps {
   instagram?: string
   telefon?: string
   email?: string
+  menuItems?: import('@/graphql/types/menuTypes').MenuItemNode[]
 }
 
 const Footer = ({
@@ -18,6 +19,7 @@ const Footer = ({
   telegram,
   telefon,
   email,
+  menuItems,
 }: FooterProps) => {
   return (
     <footer className="footer cont ind">
@@ -35,6 +37,20 @@ const Footer = ({
           </div>
           <div className="col-span-1 md:col-span-auto">
             <h5>Навигация</h5>
+            {menuItems && menuItems.length > 0 && (
+              <ul className="mt-6 flex flex-col gap-2">
+                {menuItems.map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      className="font-medium text-base hover:text-primary"
+                      href={item.uri}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <div className="col-span-2 md:col-span-auto">
             <h5>Контакты</h5>

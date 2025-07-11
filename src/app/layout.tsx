@@ -62,6 +62,7 @@ export default async function RootLayout({
           instagram={siteSettings.instagram}
           telefon={siteSettings.telefon}
           email={siteSettings.email}
+          menuItems={menuItems}
         />
         {yId ? <Metrika yId={yId} /> : null}
       </body>
