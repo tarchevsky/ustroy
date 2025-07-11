@@ -16,12 +16,19 @@ export default async function TestCategories() {
 
       <h2>Все категории ({categories.length}):</h2>
       <ul>
-        {categories.map(({ node: category }, index) => (
-          <li key={index}>
-            <strong>{category.name}</strong> - slug: {category.slug} - ID:{' '}
-            {category.id}
-          </li>
-        ))}
+        {categories.map(
+          (
+            {
+              node: category,
+            }: { node: import('@/graphql/types/categoriesTypes').CategoryNode },
+            index: number,
+          ) => (
+            <li key={index}>
+              <strong>{category.name}</strong> - slug: {category.slug} - ID:{' '}
+              {category.id}
+            </li>
+          ),
+        )}
       </ul>
 
       <h2>Предлагаемая структура маршрутов:</h2>
@@ -35,21 +42,33 @@ export default async function TestCategories() {
 
         <h3>Категории (по реальным названиям):</h3>
         <ul>
-          {categories.map(({ node: category }) => (
-            <li key={category.slug}>
-              /{category.slug} - {category.name}
-            </li>
-          ))}
+          {categories.map(
+            ({
+              node: category,
+            }: {
+              node: import('@/graphql/types/categoriesTypes').CategoryNode
+            }) => (
+              <li key={category.slug}>
+                /{category.slug} - {category.name}
+              </li>
+            ),
+          )}
         </ul>
 
         <h3>Посты (в категориях):</h3>
         <ul>
-          {categories.map(({ node: category }) => (
-            <li key={category.slug}>
-              /{category.slug}/[slug-поста] - посты в категории "{category.name}
-              "
-            </li>
-          ))}
+          {categories.map(
+            ({
+              node: category,
+            }: {
+              node: import('@/graphql/types/categoriesTypes').CategoryNode
+            }) => (
+              <li key={category.slug}>
+                /{category.slug}/[slug-поста] - посты в категории "
+                {category.name}"
+              </li>
+            ),
+          )}
         </ul>
       </div>
     </div>
