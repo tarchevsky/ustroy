@@ -82,6 +82,7 @@ const ProjectsPage = async () => {
       aboutBlock={aboutBlock}
       posts={posts}
       pageTitle={page?.title}
+      companies={companies}
     />
   )
 }

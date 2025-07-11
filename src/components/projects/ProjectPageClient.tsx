@@ -6,6 +6,7 @@ interface ProjectPageClientProps {
   aboutBlock: any
   posts: any[]
   pageTitle?: string
+  companies?: any[]
 }
 
 export default function ProjectPageClient({
@@ -13,6 +14,7 @@ export default function ProjectPageClient({
   aboutBlock,
   posts,
   pageTitle,
+  companies = [],
 }: ProjectPageClientProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
@@ -69,6 +71,32 @@ export default function ProjectPageClient({
       {aboutBlock && (
         <div className="mb-8">
           <div>{aboutBlock.title}</div>
+        </div>
+      )}
+      {companies && companies.length > 0 && (
+        <div className="cont my-8">
+          <h2 className="text-2xl font-bold mb-4">Наши заказчики</h2>
+          <div className="grid grid-cols-2 gap-4 md:flex md:flex-row md:flex-wrap md:gap-6 md:justify-center">
+            {companies.map((company) => (
+              <div
+                key={company.id}
+                className="bg-white rounded-box flex items-center justify-center"
+                style={{ height: 80 }}
+              >
+                <img
+                  src={company.src}
+                  alt={company.alt}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain',
+                  }}
+                  height={company.height || 40}
+                  width={company.width || 100}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       )}
       <div className="cont my-8">
