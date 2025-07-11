@@ -13,7 +13,7 @@ const CustomersBlock = ({ block }: CustomersBlockProps) => {
           <div key={index} className="flex items-center justify-center">
             {item.kartinka?.node && (
               <Image
-                src={item.kartinka.node.uri}
+                src={item.kartinka.node.sourceUrl}
                 alt={item.kartinka.node.altText || 'Логотип клиента'}
                 width={150}
                 height={80}

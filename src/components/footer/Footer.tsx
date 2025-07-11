@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import FadeIn from '../fadeIn/FadeIn'
 import Logo from '../logo/Logo'
 import Socials from '../socials/Socials'
 import FooterUp from './FooterUp'
@@ -24,7 +25,7 @@ const Footer = ({
 }: FooterProps) => {
   return (
     <footer className="footer cont ind">
-      <div className="w-full bg-white rounded-box p-10">
+      <FadeIn className="w-full bg-white rounded-box p-10">
         <div className="w-full grid grid-cols-2 md:flex md:justify-between gap-4 md:gap-0">
           <div className="col-span-1 md:col-span-auto">
             <Logo
@@ -151,7 +152,7 @@ const Footer = ({
           </Link>
           <FooterUp />
         </div>
-      </div>
+      </FadeIn>
     </footer>
   )
 }

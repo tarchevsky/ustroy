@@ -1,5 +1,6 @@
 import { HeroProps } from '@/types'
 import Image from 'next/image'
+import FadeIn from '../fadeIn/FadeIn'
 
 const Hero = ({
   title,
@@ -12,7 +13,7 @@ const Hero = ({
 }: HeroProps) => {
   return (
     <main className="cont ind">
-      <div>
+      <FadeIn>
         <div className="flex flex-col gap-4">
           {title ? (
             <h1 className="font-medium uppercase mt-[72px]">
@@ -55,7 +56,7 @@ const Hero = ({
             height={600}
           />
         )}
-      </div>
+      </FadeIn>
     </main>
   )
 }
