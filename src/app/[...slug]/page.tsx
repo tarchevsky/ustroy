@@ -167,9 +167,15 @@ export async function generateStaticParams() {
     })
 
     // Добавляем категории
-    categories.forEach(({ node: category }) => {
-      paths.push({ slug: [category.slug] })
-    })
+    categories.forEach(
+      ({
+        node: category,
+      }: {
+        node: import('@/graphql/types/categoriesTypes').CategoryNode
+      }) => {
+        paths.push({ slug: [category.slug] })
+      },
+    )
 
     // TODO: Добавить подкатегории и посты
     // Это потребует дополнительных запросов
