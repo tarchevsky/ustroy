@@ -1,7 +1,6 @@
 import Footer from '@/components/footer/Footer'
 import Header from '@/components/header/Header'
 import Metrika from '@/components/metrika/Metrika'
-import ScrollToTop from '@/components/scrollToTop/ScrollToTop'
 import { SITE_NAME } from '@/constants/site.constants'
 import type { Metadata } from 'next'
 import { ReactNode } from 'react'
@@ -54,7 +53,6 @@ export default async function RootLayout({
           menuItems={menuItems}
         />
         {children}
-        <ScrollToTop />
         <Footer
           logoData={logoData}
           vk={siteSettings.vk}

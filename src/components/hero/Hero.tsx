@@ -15,7 +15,7 @@ const Hero = ({
       <div>
         <div className="flex flex-col gap-4">
           {title ? (
-            <h1 className="font-medium">
+            <h1 className="font-medium uppercase mt-[72px]">
               {title}{' '}
               {subtitle && (
                 <span className="text-[32px]">

@@ -87,7 +87,7 @@ export const GET_PAGE_SETTINGS = gql`
               kartinka {
                 node {
                   altText
-                  uri
+                  sourceUrl
                 }
               }
             }

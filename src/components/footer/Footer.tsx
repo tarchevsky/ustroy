@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Logo from '../logo/Logo'
 import Socials from '../socials/Socials'
+import FooterUp from './FooterUp'
 
 interface FooterProps {
   logoData?: { altText: string; sourceUrl: string } | null
@@ -148,9 +149,7 @@ const Footer = ({
           >
             Политика конфиденциальности
           </Link>
-          <Link href="#" className="border-black border-t-[1px] pt-4">
-            Наверх
-          </Link>
+          <FooterUp />
         </div>
       </div>
     </footer>

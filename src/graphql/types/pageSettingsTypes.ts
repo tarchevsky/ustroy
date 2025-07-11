@@ -82,7 +82,7 @@ export interface TypesOfContentChooseCustomersLayout {
     kartinka: {
       node: {
         altText: string
-        uri: string
+        sourceUrl: string
       }
     }
   }>

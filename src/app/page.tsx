@@ -13,9 +13,11 @@ import {
   transformCategories,
   transformCategoryPosts,
   transformCompanies,
+  transformCustomersFromPageSettings,
   transformPosts,
   transformPostsByCategories,
 } from '@/services/transformService'
+import { Companies } from '@/ui/companies/Companies'
 
 export const revalidate = 3600 // Ревалидация каждый час (3600 секунд)
 
@@ -42,18 +44,18 @@ const HomePage = async () => {
 
   // Временный debug-вывод
   // eslint-disable-next-line react/display-name
-  // const TypesOfContentDebug = ({ data }: { data: any }) => (
-  //   <pre
-  //     style={{
-  //       background: '#f5f5f5',
-  //       padding: 16,
-  //       marginBottom: 24,
-  //       overflow: 'auto',
-  //     }}
-  //   >
-  //     {JSON.stringify(data, null, 2)}
-  //   </pre>
-  // )
+  const TypesOfContentDebug = ({ data }: { data: any }) => (
+    <pre
+      style={{
+        background: '#f5f5f5',
+        padding: 16,
+        marginBottom: 24,
+        overflow: 'auto',
+      }}
+    >
+      {JSON.stringify(data, null, 2)}
+    </pre>
+  )
 
   const {
     page,
@@ -84,6 +86,13 @@ const HomePage = async () => {
     (item: any) => item.fieldGroupName === 'TypesOfContentChooseAboutLayout',
   )
 
+  const customersBlock = typesOfContent.choose.find(
+    (item: any) =>
+      item.fieldGroupName === 'TypesOfContentChooseCustomersLayout',
+  ) as
+    | import('@/graphql/types/pageSettingsTypes').TypesOfContentChooseCustomersLayout
+    | undefined
+
   return (
     <div>
       {/* <TypesOfContentDebug data={typesOfContent} /> */}
@@ -97,6 +106,20 @@ const HomePage = async () => {
         />
       )}
       {aboutBlock && <AboutBlock block={aboutBlock} />}
+      {customersBlock && (
+        <section className="ind py-8 mt-8">
+          <div className="cont">
+            <h2 className="text-4xl font-bold mb-8 text-[#333]">
+              НАШИ ЗАКАЗЧИКИ
+            </h2>
+            <Companies
+              companies={transformCustomersFromPageSettings(
+                customersBlock.repeater,
+              )}
+            />
+          </div>
+        </section>
+      )}
     </div>
   )
 }

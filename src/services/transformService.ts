@@ -82,3 +82,19 @@ export function transformCompanies(
     height: company.height,
   }))
 }
+
+export function transformCustomersFromPageSettings(
+  repeater: Array<{
+    fieldGroupName: string
+    kartinka: { node: { altText: string; sourceUrl: string } }
+  }>,
+) {
+  if (!repeater) return []
+  return repeater.map((item, idx) => ({
+    id: String(idx),
+    src: item.kartinka.node.sourceUrl,
+    alt: item.kartinka.node.altText || '',
+    width: 141, // фиксированные размеры по макету
+    height: 66, // фиксированные размеры по макету
+  }))
+}
