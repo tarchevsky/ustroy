@@ -26,11 +26,39 @@ export default async function CategoryPostPage({
     return <div>Пост не найден</div>
   }
 
-  // Получаем имя категории из поста, если доступно
-  const categoryName = post.categories?.edges[0]?.node?.name || category
+  // Получаем имя и slug категории из поста, если доступно
+  const categoryNode = post.categories?.edges[0]?.node
+  const categoryName = categoryNode?.name || category
+  const categorySlug = categoryNode?.slug || category
+
+  // Хлебные крошки
+  const breadcrumbs: Array<{ name: string; href?: string }> = [
+    { name: 'Главная', href: '/' },
+    { name: 'Проекты', href: '/projects' },
+  ]
+  if (categorySlug && categorySlug !== 'projects') {
+    breadcrumbs.push({ name: categoryName, href: `/${categorySlug}` })
+  }
+  breadcrumbs.push({ name: post.title })
 
   return (
     <div>
+      <nav className="cont text-sm text-gray-500 py-4" aria-label="breadcrumbs">
+        {breadcrumbs.map((item, idx) =>
+          item.href ? (
+            <span key={item.name}>
+              <Link href={item.href} className="hover:underline">
+                {item.name}
+              </Link>
+              {idx < breadcrumbs.length - 1 && ' | '}
+            </span>
+          ) : (
+            <span key={item.name} className="text-black font-semibold">
+              {item.name}
+            </span>
+          ),
+        )}
+      </nav>
       <div className="cont mb-8">
         <main>
           {post.featuredImage ? (

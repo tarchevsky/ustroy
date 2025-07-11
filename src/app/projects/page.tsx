@@ -1,13 +1,13 @@
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import { Metadata } from 'next'
 
+import { ChildCategoryNode } from '@/graphql/types/childCategoriesTypes'
 import { TypesOfContentChooseHeroLayout } from '@/graphql/types/pageSettingsTypes'
 import { getApolloClient } from '@/lib/apollo-client'
-import { fetchHomePageData } from '@/services/pageService'
+import { fetchChildCategories, fetchHomePageData } from '@/services/pageService'
 import { fetchPageSettings } from '@/services/pageSettingsService'
 
-import AboutBlock from '@/components/aboutBlock/AboutBlock'
-import Hero from '@/components/hero/Hero'
+import ProjectPageClient from '@/components/projects/ProjectPageClient'
 import {
   transformCategories,
   transformCategoryPosts,
@@ -66,19 +66,24 @@ const ProjectsPage = async () => {
     (item: any) => item.fieldGroupName === 'TypesOfContentChooseAboutLayout',
   )
 
+  // Категории для фильтра
+  const projectCategories = categories.filter((cat: any) => cat.count > 0)
+
+  // Получаем slug основной категории ("Проекты")
+  const mainCategorySlug = categoryData?.slug
+  let childCategories: ChildCategoryNode[] = []
+  if (mainCategorySlug) {
+    childCategories = await fetchChildCategories(apolloClient, mainCategorySlug)
+  }
+
   return (
-    <div>
-      {heroBlock && (
-        <Hero
-          title={heroBlock.header}
-          subtitle={heroBlock.sub}
-          text1={heroBlock.text1}
-          text2={heroBlock.text2}
-          buttonText="Обсудить проект"
-        />
-      )}
-      {aboutBlock && <AboutBlock block={aboutBlock} />}
-    </div>
+    <ProjectPageClient
+      heroBlock={heroBlock}
+      aboutBlock={aboutBlock}
+      categories={projectCategories}
+      childCategories={childCategories}
+      posts={posts}
+    />
   )
 }
 
