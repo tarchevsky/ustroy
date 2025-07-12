@@ -109,4 +109,5 @@ export type PostProps = {
 
 export interface BurgerProps {
   toggleMenu: () => void
+  isActive: boolean
 }

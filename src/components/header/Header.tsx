@@ -168,7 +168,7 @@ const Header: FC<HeaderProps> = ({
             {telefon}
           </a>
         )}
-        <Burger toggleMenu={toggleMenu} />
+        <Burger toggleMenu={toggleMenu} isActive={isMenuActive} />
       </div>
     </header>
   )

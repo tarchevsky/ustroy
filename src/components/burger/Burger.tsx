@@ -1,20 +1,12 @@
 import { BurgerProps } from '@/types'
-import { useState } from 'react'
 
-const Burger = ({ toggleMenu }: BurgerProps) => {
-  const [isActive, setIsActive] = useState(false)
-
-  const toggleIsActive = () => {
-    setIsActive((prev) => !prev)
-    toggleMenu()
-  }
-
+const Burger = ({ toggleMenu, isActive }: BurgerProps) => {
   return (
     <label className="swap swap-rotate block md:hidden absolute inset-y-8 right-14 sm:right-20 cursor-pointer z-20 p-0 bg-transparent border-0 shadow-none">
       <input
         type="checkbox"
         checked={isActive}
-        onChange={toggleIsActive}
+        onChange={toggleMenu}
         aria-label="Open the menu"
         className="hidden"
       />
