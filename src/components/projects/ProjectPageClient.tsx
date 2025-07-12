@@ -1,5 +1,6 @@
 'use client'
 import { useMemo, useState } from 'react'
+import styles from './ProjectPageClient.module.css'
 
 interface ProjectPageClientProps {
   heroBlock: any
@@ -100,9 +101,11 @@ export default function ProjectPageClient({
         </div>
       )}
       <div className="cont my-8">
-        <div className="flex flex-row flex-wrap gap-2 mb-6">
+        <div
+          className={`flex gap-2 mb-6 overflow-x-auto pb-2 -mx-4 px-4 ${styles.scrollContainer}`}
+        >
           <button
-            className={`btn btn-primary border-white text-white ${selectedCategory ? 'btn-outline text-primary bg-white border-primary' : ''}`}
+            className={`btn btn-primary border-white text-white whitespace-nowrap ${selectedCategory ? 'btn-outline text-primary bg-white border-primary' : ''}`}
             onClick={() => setSelectedCategory(null)}
           >
             Все проекты
@@ -110,7 +113,7 @@ export default function ProjectPageClient({
           {uniqueCategories.map((cat) => (
             <button
               key={cat.slug}
-              className={`btn bg-white text-black border border-gray-200 ${selectedCategory === cat.slug ? 'border-primary bg-primary border-2 text-primary' : ''}`}
+              className={`btn bg-white text-black border border-gray-200 whitespace-nowrap ${selectedCategory === cat.slug ? 'border-primary bg-primary border-2 text-primary' : ''}`}
               onClick={() => setSelectedCategory(cat.slug)}
             >
               {cat.name}

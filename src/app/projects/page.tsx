@@ -77,13 +77,15 @@ const ProjectsPage = async () => {
   }
 
   return (
-    <ProjectPageClient
-      heroBlock={heroBlock}
-      aboutBlock={aboutBlock}
-      posts={posts}
-      pageTitle={page?.title}
-      companies={companies}
-    />
+    <>
+      <ProjectPageClient
+        heroBlock={heroBlock}
+        aboutBlock={aboutBlock}
+        posts={posts}
+        pageTitle={page?.title}
+        companies={companies}
+      />
+    </>
   )
 }
 
