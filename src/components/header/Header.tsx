@@ -168,6 +168,14 @@ const Header: FC<HeaderProps> = ({
             {telefon}
           </a>
         )}
+        {telefon && (
+          <Link
+            href={`tel:${telefon}`}
+            className="p-[5px] mt-2 mr-[47px] md:hidden"
+          >
+            <img src="/phone.svg" alt="Телефон" width={24} height={24} />
+          </Link>
+        )}
         <Burger toggleMenu={toggleMenu} isActive={isMenuActive} />
       </div>
     </header>
