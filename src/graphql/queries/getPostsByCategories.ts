@@ -10,6 +10,12 @@ export const GET_POSTS_BY_CATEGORIES = gql`
           slug
           date
           excerpt
+          featuredImage {
+            node {
+              link
+              altText
+            }
+          }
           categories {
             edges {
               node {

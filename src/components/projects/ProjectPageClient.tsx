@@ -124,7 +124,7 @@ export default function ProjectPageClient({
           {filteredPosts.map((post: any) => (
             <a
               key={post.slug}
-              href={`/${post.categories?.edges[0]?.node.slug || 'projects'}/${post.slug}`}
+              href={`/projects/${post.categories?.edges[0]?.node.slug || 'projects'}/${post.slug}`}
               className="block border rounded-lg overflow-hidden hover:shadow-lg transition relative group"
               style={{
                 minHeight: '280px',

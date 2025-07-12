@@ -9,6 +9,13 @@ export const GET_POSTS = gql`
           excerpt
           title
           slug
+          date
+          featuredImage {
+            node {
+              link
+              altText
+            }
+          }
           categories {
             edges {
               node {

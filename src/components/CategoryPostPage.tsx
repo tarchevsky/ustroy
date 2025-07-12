@@ -37,7 +37,7 @@ export default async function CategoryPostPage({
     { name: 'Проекты', href: '/projects' },
   ]
   if (categorySlug && categorySlug !== 'projects') {
-    breadcrumbs.push({ name: categoryName, href: `/${categorySlug}` })
+    breadcrumbs.push({ name: categoryName, href: `/projects/${categorySlug}` })
   }
   breadcrumbs.push({ name: post.title })
 
@@ -53,7 +53,7 @@ export default async function CategoryPostPage({
               {idx < breadcrumbs.length - 1 && ' | '}
             </span>
           ) : (
-            <span key={item.name} className="text-black font-semibold">
+            <span key={item.name} className="text-primary font-semibold">
               {item.name}
             </span>
           ),

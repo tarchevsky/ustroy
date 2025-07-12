@@ -20,8 +20,33 @@ export default function CategoryPage({ categoryData }: CategoryPageProps) {
   console.log('👶 Дочерние категории:', childCategories)
   console.log('📝 Посты:', categoryPosts)
 
+  // Хлебные крошки
+  const breadcrumbs: Array<{ name: string; href?: string }> = [
+    { name: 'Главная', href: '/' },
+    { name: 'Проекты', href: '/projects' },
+    { name: categoryData.name },
+  ]
+
   return (
     <>
+      {/* Хлебные крошки */}
+      <nav className="cont text-sm text-gray-500 py-4" aria-label="breadcrumbs">
+        {breadcrumbs.map((item, idx) =>
+          item.href ? (
+            <span key={item.name}>
+              <Link href={item.href} className="hover:underline">
+                {item.name}
+              </Link>
+              {idx < breadcrumbs.length - 1 && ' | '}
+            </span>
+          ) : (
+            <span key={item.name} className="text-primary font-semibold">
+              {item.name}
+            </span>
+          ),
+        )}
+      </nav>
+
       <FadeIn className="cont ind">
         <h1>{categoryData.name}</h1>
         {categoryData.description && (
@@ -50,7 +75,7 @@ export default function CategoryPage({ categoryData }: CategoryPageProps) {
               {childCategories.map((child: ChildCategory) => (
                 <Link
                   key={child.id}
-                  href={`/${categoryData.slug}/${child.slug}`}
+                  href={`/projects/${child.slug}`}
                   className="block p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors"
                 >
                   <h3 className="text-lg font-semibold mb-2">{child.name}</h3>

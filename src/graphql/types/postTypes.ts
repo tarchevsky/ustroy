@@ -3,6 +3,13 @@ export interface PostNode {
   excerpt: string
   title: string
   slug: string
+  date: string
+  featuredImage?: {
+    node: {
+      link: string
+      altText: string
+    }
+  }
   categories?: {
     edges: Array<{
       node: {
