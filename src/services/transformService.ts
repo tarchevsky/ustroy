@@ -48,12 +48,20 @@ export function transformCategoryBySlugPosts(
 }
 
 export function transformPostsByCategories(
-  categoryPostsData: PostsData['posts']['edges'],
+  categoryPostsData: any[],
 ): PostProps[] {
   return categoryPostsData.map(({ node }) => {
     const mainCategory = node.categories?.edges[0]?.node
     return {
       ...node,
+      featuredImage: node.featuredImage
+        ? {
+            node: {
+              link: node.featuredImage.node.sourceUrl,
+              altText: node.featuredImage.node.altText || '',
+            },
+          }
+        : undefined,
       path: mainCategory
         ? `/${mainCategory.slug}/${node.slug}`
         : `/posts/${node.slug}`,

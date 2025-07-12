@@ -12,7 +12,7 @@ export const GET_POSTS_BY_CATEGORIES = gql`
           excerpt
           featuredImage {
             node {
-              link
+              sourceUrl
               altText
             }
           }
