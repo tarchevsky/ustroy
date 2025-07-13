@@ -106,16 +106,28 @@ const AboutBlock = ({ block }: { block: any }) => {
                 {block.grid[0].subtitle}
               </div>
             </div>
-            {/* Картинка */}
-            <img
-              src={block.grid[0].img.node.sourceUrl}
-              alt={block.grid[0].img.node.altText}
-              className="object-cover box-border rounded-box"
+            {/* Картинка с overlay */}
+            <div
+              className="relative object-cover box-border rounded-box"
               style={{
                 width: `calc(${IMG_PERC}% )`,
                 aspectRatio: '897/395.47',
               }}
-            />
+            >
+              <img
+                src={block.grid[0].img.node.sourceUrl}
+                alt={block.grid[0].img.node.altText}
+                className="w-full h-full object-cover box-border rounded-box"
+                style={{ position: 'absolute', inset: 0 }}
+              />
+              <div
+                className="absolute inset-0 z-10 rounded-box"
+                style={{
+                  background:
+                    'linear-gradient(358deg, rgba(0,0,0,0.40) 23.98%, rgba(159,159,159,0.04) 98.03%)',
+                }}
+              />
+            </div>
           </div>
           {/* Вторая строка: две картинки в колонку, прямоугольник с текстом, большая картинка */}
           <div className="flex flex-row gap-4 box-border">
@@ -125,20 +137,44 @@ const AboutBlock = ({ block }: { block: any }) => {
               style={{ width: `calc(${RECT_PERC}% )` }}
             >
               {block.grid[1].imgMiniOne && (
-                <img
-                  src={block.grid[1].imgMiniOne.node.sourceUrl}
-                  alt={block.grid[1].imgMiniOne.node.altText}
-                  className="object-cover box-border rounded-box"
-                  style={{ width: '100%', aspectRatio: '290/264' }}
-                />
+                <div
+                  className="relative w-full"
+                  style={{ aspectRatio: '290/264' }}
+                >
+                  <img
+                    src={block.grid[1].imgMiniOne.node.sourceUrl}
+                    alt={block.grid[1].imgMiniOne.node.altText}
+                    className="w-full h-full object-cover box-border rounded-box"
+                    style={{ position: 'absolute', inset: 0 }}
+                  />
+                  <div
+                    className="absolute inset-0 z-10 rounded-box"
+                    style={{
+                      background:
+                        'linear-gradient(358deg, rgba(0,0,0,0.40) 23.98%, rgba(159,159,159,0.04) 98.03%)',
+                    }}
+                  />
+                </div>
               )}
               {block.grid[1].imgMiniTwo && (
-                <img
-                  src={block.grid[1].imgMiniTwo.node.sourceUrl}
-                  alt={block.grid[1].imgMiniTwo.node.altText}
-                  className="object-cover box-border rounded-box"
-                  style={{ width: '100%', aspectRatio: '290/264' }}
-                />
+                <div
+                  className="relative w-full"
+                  style={{ aspectRatio: '290/264' }}
+                >
+                  <img
+                    src={block.grid[1].imgMiniTwo.node.sourceUrl}
+                    alt={block.grid[1].imgMiniTwo.node.altText}
+                    className="w-full h-full object-cover box-border rounded-box"
+                    style={{ position: 'absolute', inset: 0 }}
+                  />
+                  <div
+                    className="absolute inset-0 z-10 rounded-box"
+                    style={{
+                      background:
+                        'linear-gradient(358deg, rgba(0,0,0,0.40) 23.98%, rgba(159,159,159,0.04) 98.03%)',
+                    }}
+                  />
+                </div>
               )}
             </div>
             {/* Прямоугольник с текстом */}
@@ -159,29 +195,53 @@ const AboutBlock = ({ block }: { block: any }) => {
                 {block.grid[1].subtitle}
               </div>
             </div>
-            {/* Большая картинка */}
-            <img
-              src={block.grid[1].img.node.sourceUrl}
-              alt={block.grid[1].img.node.altText}
-              className="object-cover box-border rounded-box"
+            {/* Большая картинка с overlay */}
+            <div
+              className="relative object-cover box-border rounded-box"
               style={{
                 width: `calc(100% - 2*${RECT_PERC}% - 2*${GAP}px)`,
                 aspectRatio: '592/542',
               }}
-            />
+            >
+              <img
+                src={block.grid[1].img.node.sourceUrl}
+                alt={block.grid[1].img.node.altText}
+                className="w-full h-full object-cover box-border rounded-box"
+                style={{ position: 'absolute', inset: 0 }}
+              />
+              <div
+                className="absolute inset-0 z-10 rounded-box"
+                style={{
+                  background:
+                    'linear-gradient(358deg, rgba(0,0,0,0.40) 23.98%, rgba(159,159,159,0.04) 98.03%)',
+                }}
+              />
+            </div>
           </div>
           {/* Третья строка: картинка слева, прямоугольник, gap только между элементами */}
           <div className="flex flex-row gap-4 box-border">
-            {/* Картинка */}
-            <img
-              src={block.grid[2].img.node.sourceUrl}
-              alt={block.grid[2].img.node.altText}
-              className="object-cover box-border rounded-box"
+            {/* Картинка с overlay */}
+            <div
+              className="relative object-cover box-border rounded-box"
               style={{
                 width: `calc(${IMG_PERC}% )`,
                 aspectRatio: '897/395.47',
               }}
-            />
+            >
+              <img
+                src={block.grid[2].img.node.sourceUrl}
+                alt={block.grid[2].img.node.altText}
+                className="w-full h-full object-cover box-border rounded-box"
+                style={{ position: 'absolute', inset: 0 }}
+              />
+              <div
+                className="absolute inset-0 z-10 rounded-box"
+                style={{
+                  background:
+                    'linear-gradient(358deg, rgba(0,0,0,0.40) 23.98%, rgba(159,159,159,0.04) 98.03%)',
+                }}
+              />
+            </div>
             {/* Прямоугольник с текстом */}
             <div
               className="flex flex-col justify-between bg-white p-6 shadow-none box-border rounded-box"

@@ -1,6 +1,7 @@
 'use client'
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
+import ProjectGrid from './ProjectGrid'
 import styles from './ProjectPageClient.module.css'
 
 interface ProjectPageClientProps {
@@ -65,6 +66,16 @@ export default function ProjectPageClient({
     heroBlock && heroBlock.header && String(heroBlock.header).trim() !== ''
   return (
     <div>
+      {/* Хлебные крошки */}
+      <nav className="cont text-sm text-gray-500 py-4" aria-label="breadcrumbs">
+        <span>
+          <a href="/" className="hover:underline">
+            Главная
+          </a>{' '}
+          |
+        </span>
+        <span className="text-primary font-semibold ml-1">Проекты</span>
+      </nav>
       {showHero && (
         <div className="mb-8">
           <div className="mb-4 cont">
@@ -144,37 +155,8 @@ export default function ProjectPageClient({
             {pageTitle}
           </h1>
         </div>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredPosts.length === 0 && (
-            <div>Нет проектов в этой категории</div>
-          )}
-          {filteredPosts.map((post: any) => (
-            <a
-              key={post.slug}
-              href={`/projects/${post.categories?.edges[0]?.node.slug || 'projects'}/${post.slug}`}
-              className="block border rounded-lg overflow-hidden hover:shadow-lg transition relative group"
-              style={{
-                minHeight: '280px',
-                background: post.featuredImage?.node?.link
-                  ? `url(${post.featuredImage.node.link}) center/cover no-repeat`
-                  : '#222',
-              }}
-            >
-              <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition" />
-              <div className="relative z-10 p-4 flex flex-col h-full justify-end">
-                <div className="text-lg font-semibold mb-2 text-white">
-                  {post.title}
-                </div>
-                <div className="text-sm text-gray-200 mb-1">
-                  {post.categories?.edges
-                    .map((edge: any) => edge.node.name)
-                    .join(', ')}
-                </div>
-                <div className="text-xs text-gray-300">{post.date}</div>
-              </div>
-            </a>
-          ))}
-        </div>
+        {/* Сетка проектов */}
+        <ProjectGrid posts={filteredPosts} />
       </div>
     </div>
   )

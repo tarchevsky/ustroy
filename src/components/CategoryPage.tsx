@@ -1,8 +1,8 @@
-import CategoryPosts from '@/components/categoryPosts/CategoryPosts'
 import FadeIn from '@/components/fadeIn/FadeIn'
 import { ChildCategory } from '@/graphql/types/categoryWithChildrenTypes'
 import { transformCategoryBySlugPosts } from '@/services/transformService'
 import Link from 'next/link'
+import ProjectGrid from './projects/ProjectGrid'
 
 interface CategoryPageProps {
   categoryData: any
@@ -54,18 +54,6 @@ export default function CategoryPage({ categoryData }: CategoryPageProps) {
         )}
       </FadeIn>
 
-      {/* Отладочная информация */}
-      <div style={{ background: '#f0f0f0', padding: '10px', margin: '10px 0' }}>
-        <h3>Отладка CategoryPage</h3>
-        <p>Название категории: {categoryData.name}</p>
-        <p>Количество дочерних категорий: {childCategories.length}</p>
-        <p>Количество постов: {categoryPosts.length}</p>
-        <p>
-          Дочерние категории:{' '}
-          {childCategories.map((c: any) => c.name).join(', ')}
-        </p>
-      </div>
-
       {/* Дочерние категории */}
       {childCategories.length > 0 && (
         <FadeIn className="cont">
@@ -101,17 +89,16 @@ export default function CategoryPage({ categoryData }: CategoryPageProps) {
 
       {/* Посты в текущей категории */}
       {categoryPosts.length > 0 && (
-        <FadeIn className="cont">
-          <h2 className="text-2xl font-bold mb-4">
-            {childCategories.length > 0 ? 'Посты в этой категории' : 'Посты'}
-          </h2>
-          <CategoryPosts posts={categoryPosts} />
+        <FadeIn className="cont ind">
+          <h2 className="text-2xl font-bold"></h2>
+          {/* Сетка проектов без фильтров */}
+          <ProjectGrid posts={categoryPosts} />
         </FadeIn>
       )}
 
       {/* Если нет ни дочерних категорий, ни постов */}
       {childCategories.length === 0 && categoryPosts.length === 0 && (
-        <FadeIn className="cont">
+        <FadeIn className="cont ind">
           <div className="text-center py-8">
             <p className="text-gray-500">В этой категории пока нет контента</p>
           </div>
