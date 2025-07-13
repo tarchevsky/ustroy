@@ -4,10 +4,6 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'm2.headlessbox.ru',
-      },
-      {
-        protocol: 'https',
         hostname: 'ustroy.teziscam.ru',
       },
     ],

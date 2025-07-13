@@ -1,8 +1,8 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
+import ProjectFilters from '../projectFilters/ProjectFilters'
 import ProjectGrid from './ProjectGrid'
-import styles from './ProjectPageClient.module.css'
 
 interface ProjectPageClientProps {
   heroBlock: any
@@ -36,22 +36,6 @@ export default function ProjectPageClient({
         console.error('🔍 ProjectPageClient: API error =', error)
       })
   }, [pathname])
-
-  // Собираем уникальные категории из всех постов
-  const uniqueCategories = useMemo(() => {
-    const map = new Map<string, { slug: string; name: string }>()
-    posts.forEach((post) => {
-      post.categories?.edges.forEach((edge: any) => {
-        if (!map.has(edge.node.slug)) {
-          map.set(edge.node.slug, {
-            slug: edge.node.slug,
-            name: edge.node.name,
-          })
-        }
-      })
-    })
-    return Array.from(map.values())
-  }, [posts])
 
   // Фильтрация проектов
   const filteredPosts = selectedCategory
@@ -125,25 +109,12 @@ export default function ProjectPageClient({
         </div>
       )}
       <div className="cont my-8">
-        <div
-          className={`flex gap-2 mb-6 overflow-x-auto pb-2 -mx-4 px-4 ${styles.scrollContainer}`}
-        >
-          <button
-            className={`btn btn-primary text-white whitespace-nowrap ${selectedCategory ? ' btn-outline bg-white border-white text-black' : ''}`}
-            onClick={() => setSelectedCategory(null)}
-          >
-            Все проекты
-          </button>
-          {uniqueCategories.map((cat) => (
-            <button
-              key={cat.slug}
-              className={`btn bg-white text-black border border-gray-200 whitespace-nowrap ${selectedCategory === cat.slug ? 'border-primary bg-primary border-2 text-primary' : ''}`}
-              onClick={() => setSelectedCategory(cat.slug)}
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
+        <ProjectFilters
+          posts={posts}
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+          className="mb-6 -mx-4 px-4"
+        />
         <div className="mb-6">
           <h1
             className="font-medium break-words"

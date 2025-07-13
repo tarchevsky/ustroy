@@ -1,6 +1,7 @@
 'use client'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import FadeIn from '../fadeIn/FadeIn'
+import ProjectFilters from '../projectFilters/ProjectFilters'
 import styles from './PostsCarousel.module.scss'
 
 interface Post {
@@ -24,22 +25,6 @@ interface PostsCarouselProps {
 
 const PostsCarousel: React.FC<PostsCarouselProps> = ({ posts }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-
-  // Собираем уникальные категории из всех постов
-  const uniqueCategories = useMemo(() => {
-    const map = new Map<string, { slug: string; name: string }>()
-    posts.forEach((post) => {
-      post.categories?.edges.forEach((edge: any) => {
-        if (!map.has(edge.node.slug)) {
-          map.set(edge.node.slug, {
-            slug: edge.node.slug,
-            name: edge.node.name,
-          })
-        }
-      })
-    })
-    return Array.from(map.values())
-  }, [posts])
 
   // Фильтрация постов
   const filteredPosts = selectedCategory
@@ -73,7 +58,7 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({ posts }) => {
                 <img
                   src={post.featuredImage.node.link}
                   alt={post.title}
-                  className="absolute inset-0 w-full h-full object-cover z-0  transition-transform duration-300"
+                  className="absolute inset-0 w-full h-full object-cover z-0 group-hover:scale-105 transition-transform duration-300"
                 />
               )}
               <div
@@ -102,33 +87,12 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({ posts }) => {
 
       {/* Фильтры */}
       <div className="cont">
-        <div
-          className={`flex gap-2 mt-6 overflow-x-auto pb-2 ${styles.filtersContainer}`}
-        >
-          <button
-            className={`btn btn-primary text-white whitespace-nowrap ${
-              selectedCategory
-                ? 'btn-outline bg-white border-white text-black'
-                : ''
-            }`}
-            onClick={() => setSelectedCategory(null)}
-          >
-            Все проекты
-          </button>
-          {uniqueCategories.map((cat) => (
-            <button
-              key={cat.slug}
-              className={`btn bg-white text-black border border-gray-200 whitespace-nowrap ${
-                selectedCategory === cat.slug
-                  ? 'border-primary bg-primary border-2 text-primary'
-                  : ''
-              }`}
-              onClick={() => setSelectedCategory(cat.slug)}
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
+        <ProjectFilters
+          posts={posts}
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+          className="mt-6"
+        />
       </div>
     </div>
   )
