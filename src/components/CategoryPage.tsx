@@ -63,7 +63,7 @@ export default function CategoryPage({ categoryData }: CategoryPageProps) {
               {childCategories.map((child: ChildCategory) => (
                 <Link
                   key={child.id}
-                  href={`/projects/${child.slug}`}
+                  href={`/${child.slug}`}
                   className="block p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors"
                 >
                   <h3 className="text-lg font-semibold mb-2">{child.name}</h3>
@@ -96,13 +96,13 @@ export default function CategoryPage({ categoryData }: CategoryPageProps) {
         </FadeIn>
       )}
 
-      {/* Если нет ни дочерних категорий, ни постов */}
+      {/* Если нет ни дочерних категорий, ни постов - возвращаем 404 */}
       {childCategories.length === 0 && categoryPosts.length === 0 && (
-        <FadeIn className="cont ind">
+        <div className="cont ind">
           <div className="text-center py-8">
-            <p className="text-gray-500">В этой категории пока нет контента</p>
+            <p className="text-gray-500">Страница не найдена</p>
           </div>
-        </FadeIn>
+        </div>
       )}
     </>
   )

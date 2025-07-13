@@ -21,6 +21,15 @@ export const GET_POST_BY_SLUG = gql`
         title
         metaDesc
       }
+      typesOfContent {
+        choose {
+          fieldGroupName
+          ... on TypesOfContentChooseCalculateLayout {
+            text
+            btnText
+          }
+        }
+      }
       categories {
         edges {
           node {

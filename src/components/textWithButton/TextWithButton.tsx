@@ -54,9 +54,9 @@ const TextWithButton = ({
   if (!modalContent) {
     return (
       <FadeIn className="ind cont-left bg-white rounded-r-box pl-2">
-        <div className="mt-16 flex flex-col md:flex-row items-center justify-between">
+        <div className="mt-16 flex flex-col md:flex-row items-center justify-between md:gap-4">
           <p
-            className="text-2xl font-normal"
+            className="text-2xl font-normal py-6 lg:py-0"
             style={{ fontFamily: 'Unbounded Variable, sans-serif' }}
           >
             {text || 'Остались вопросы?'}

@@ -69,7 +69,7 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({ posts }) => {
                 }}
               />
               <div
-                className="relative z-20 text-white font-semibold"
+                className="relative z-10 text-white font-semibold"
                 style={{
                   left: 32,
                   bottom: 32,

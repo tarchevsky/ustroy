@@ -134,7 +134,7 @@ const Header: FC<HeaderProps> = ({
         </ul>
         {/* Кнопка и телефон внизу мобильного меню */}
         <div className="absolute bottom-6 left-0 w-full flex flex-col gap-2 px-4">
-          <button className="btn btn-sm btn-block font-medium text-base-100 btn-primary hover:bg-base-100 hover:text-primary border-primary border-2 text-sm px-1 whitespace-nowrap">
+          <button className="btn btn-sm btn-block font-medium text-base-100 btn-primary hover:bg-base-100 hover:text-primary border-primary border-2 text-sm md:text-base px-1 whitespace-nowrap">
             Обсудить проект
           </button>
           {telefon && (

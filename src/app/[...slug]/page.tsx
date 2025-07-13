@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import CategoryPage from '@/components/CategoryPage'
 import CategoryPostPage from '@/components/CategoryPostPage'
 import WpPageComponent from '@/components/WpPageComponent'
+import { GET_POST_BY_SLUG } from '@/graphql/queries/getPostBySlug'
 import { getApolloClient } from '@/lib/apollo-client'
 import {
   fetchAllCategories,
@@ -58,6 +59,14 @@ export async function generateMetadata({
 
   // 2. Проверяем подкатегорию (два сегмента: категория/подкатегория)
   if (slug.length === 2) {
+    // Исключаем создание страницы /projects/projects
+    if (slug[0] === 'projects' && slug[1] === 'projects') {
+      return {
+        title: 'Страница не найдена',
+        description: 'Запрашиваемая страница не существует',
+      }
+    }
+
     const categoryData = await fetchCategoryWithChildren(apolloClient, slug[1])
     if (categoryData) {
       return {
@@ -70,10 +79,21 @@ export async function generateMetadata({
 
   // 3. Проверяем пост (три сегмента: категория/подкатегория/пост)
   if (slug.length === 3) {
-    // Здесь нужно добавить логику для постов
-    return {
-      title: 'Пост не найден',
-      description: 'Запрашиваемый пост не существует',
+    try {
+      const { data } = await apolloClient.query({
+        query: GET_POST_BY_SLUG,
+        variables: { slug: slug[2] },
+      })
+
+      const post = data?.postBy
+      if (post) {
+        return {
+          title: post.seo?.title || post.title,
+          description: post.seo?.metaDesc || `Пост ${post.title}`,
+        }
+      }
+    } catch (error) {
+      console.error('Ошибка при получении поста:', error)
     }
   }
 
@@ -112,6 +132,12 @@ const DynamicPage = async ({ params }: PageProps) => {
 
   // 2. Проверяем подкатегорию (два сегмента: категория/подкатегория)
   if (slug.length === 2) {
+    // Исключаем создание страницы /projects/projects
+    if (slug[0] === 'projects' && slug[1] === 'projects') {
+      console.log('❌ Блокируем создание страницы /projects/projects')
+      notFound()
+    }
+
     const categoryData = await fetchCategoryWithChildren(apolloClient, slug[1])
     if (categoryData) {
       console.log('✅ Найдена подкатегория:', categoryData.name)
@@ -146,6 +172,22 @@ export async function generateStaticParams() {
     // Получаем все категории
     const categories = await fetchAllCategories(apolloClient)
 
+    // Получаем все посты для проверки пустых категорий
+    const { GET_POSTS } = await import('@/graphql/queries/getPosts')
+    const { data: postsData } = await apolloClient.query({
+      query: GET_POSTS,
+      variables: { first: 1000 },
+    })
+    const posts = postsData?.posts?.edges?.map((edge: any) => edge.node) || []
+
+    // Создаем Set категорий, в которых есть посты
+    const categoriesWithPosts = new Set<string>()
+    posts.forEach((post: any) => {
+      post.categories?.edges?.forEach((edge: any) => {
+        categoriesWithPosts.add(edge.node.slug)
+      })
+    })
+
     const paths: Array<{ slug: string[] }> = []
 
     // Добавляем страницы WordPress (исключаем главную и projects)
@@ -166,14 +208,16 @@ export async function generateStaticParams() {
       paths.push({ slug: [page.slug] })
     })
 
-    // Добавляем категории
+    // Добавляем только категории, в которых есть посты
     categories.forEach(
       ({
         node: category,
       }: {
         node: import('@/graphql/types/categoriesTypes').CategoryNode
       }) => {
-        paths.push({ slug: [category.slug] })
+        if (categoriesWithPosts.has(category.slug)) {
+          paths.push({ slug: [category.slug] })
+        }
       },
     )
 

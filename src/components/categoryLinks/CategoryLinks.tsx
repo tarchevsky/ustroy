@@ -1,29 +1,96 @@
-import { CategoryLinkProps } from '@/graphql/types/categoriesTypes'
+'use client'
 import Link from 'next/link'
+import { useEffect, useMemo, useState } from 'react'
+import styles from '../projectFilters/ProjectFilters.module.scss'
 
-interface CategoryLinksProps {
-  categories: CategoryLinkProps[]
+interface Category {
+  slug: string
+  name: string
 }
 
-const CategoryLinks = ({ categories }: CategoryLinksProps) => {
-  if (!categories || categories.length === 0) {
-    return null
+interface Post {
+  categories?: {
+    edges: Array<{
+      node: {
+        slug: string
+        name: string
+      }
+    }>
+  }
+}
+
+interface CategoryLinksProps {
+  categories: Category[]
+  posts: Post[]
+  currentCategorySlug: string
+  className?: string
+}
+
+const CategoryLinks: React.FC<CategoryLinksProps> = ({
+  categories,
+  posts,
+  currentCategorySlug,
+  className = '',
+}) => {
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // Собираем уникальные категории только из постов, которые есть
+  const uniqueCategories = useMemo(() => {
+    const map = new Map<string, { slug: string; name: string }>()
+    posts.forEach((post) => {
+      post.categories?.edges.forEach((edge: any) => {
+        if (!map.has(edge.node.slug)) {
+          map.set(edge.node.slug, {
+            slug: edge.node.slug,
+            name: edge.node.name,
+          })
+        }
+      })
+    })
+    // Сортируем для стабильности рендера
+    return Array.from(map.values()).sort((a, b) => a.slug.localeCompare(b.slug))
+  }, [posts])
+
+  // Не рендерим на сервере или если нет данных, только после гидратации
+  if (!isClient || !posts || posts.length === 0) {
+    return (
+      <div
+        className={`flex gap-2 overflow-x-auto pb-2 ${styles.filtersContainer} ${className}`}
+      >
+        <div className="btn bg-white text-black border border-gray-200 whitespace-nowrap">
+          Все проекты
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="cont my-8">
-      <h2 className="text-2xl font-bold mb-4">Категории</h2>
-      <div className="flex flex-wrap gap-4">
-        {categories.map((category) => (
-          <Link
-            key={category.id}
-            href={`/${category.slug}`}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-          >
-            {category.name}
-          </Link>
-        ))}
-      </div>
+    <div
+      className={`flex gap-2 overflow-x-auto pb-2 ${styles.filtersContainer} ${className}`}
+    >
+      <Link
+        href="/projects"
+        className={`btn bg-white text-black border border-gray-200 whitespace-nowrap hover:border-primary hover:text-primary`}
+      >
+        Все проекты
+      </Link>
+      {uniqueCategories.map((cat) => (
+        <Link
+          key={cat.slug}
+          href={`/${cat.slug}`}
+          className={`btn bg-white text-black border border-gray-200 whitespace-nowrap ${
+            currentCategorySlug === cat.slug
+              ? 'btn-primary text-primary border-primary border-2'
+              : 'hover:border-primary hover:text-primary'
+          }`}
+        >
+          {cat.name}
+        </Link>
+      ))}
     </div>
   )
 }

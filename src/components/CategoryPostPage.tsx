@@ -1,7 +1,11 @@
+import { GET_CATEGORIES } from '@/graphql/queries/getCategories'
 import { GET_POST_BY_SLUG } from '@/graphql/queries/getPostBySlug'
+import { GET_POSTS } from '@/graphql/queries/getPosts'
+import type { TypesOfContentChooseCalculateLayout } from '@/graphql/types/pageSettingsTypes'
 import { getApolloClient } from '@/lib/apollo-client'
-import { formatDate } from '@/utils/formatDate'
 import Link from 'next/link'
+import CategoryLinks from './categoryLinks/CategoryLinks'
+import TextWithButton from './textWithButton/TextWithButton'
 
 interface CategoryPostPageProps {
   category: string
@@ -20,7 +24,22 @@ export default async function CategoryPostPage({
     variables: { slug },
   })
 
+  // Получаем все категории
+  const { data: categoriesData } = await apolloClient.query({
+    query: GET_CATEGORIES,
+    variables: { categoryIds: null }, // null для получения всех категорий
+  })
+
+  // Получаем все посты для фильтрации категорий
+  const { data: postsData } = await apolloClient.query({
+    query: GET_POSTS,
+    variables: { first: 1000 }, // Получаем много постов для полного списка категорий
+  })
+
   const post = data?.postBy
+  const categories =
+    categoriesData?.categories?.edges?.map((edge: any) => edge.node) || []
+  const posts = postsData?.posts?.edges?.map((edge: any) => edge.node) || []
 
   if (!post) {
     return <div>Пост не найден</div>
@@ -31,13 +50,19 @@ export default async function CategoryPostPage({
   const categoryName = categoryNode?.name || category
   const categorySlug = categoryNode?.slug || category
 
+  // Получаем calculateBlock из typesOfContent
+  const calculateBlock = post.typesOfContent?.choose?.find(
+    (item: any) =>
+      item.fieldGroupName === 'TypesOfContentChooseCalculateLayout',
+  ) as TypesOfContentChooseCalculateLayout | undefined
+
   // Хлебные крошки
   const breadcrumbs: Array<{ name: string; href?: string }> = [
     { name: 'Главная', href: '/' },
     { name: 'Проекты', href: '/projects' },
   ]
   if (categorySlug && categorySlug !== 'projects') {
-    breadcrumbs.push({ name: categoryName, href: `/projects/${categorySlug}` })
+    breadcrumbs.push({ name: categoryName, href: `/${categorySlug}` })
   }
   breadcrumbs.push({ name: post.title })
 
@@ -61,42 +86,20 @@ export default async function CategoryPostPage({
       </nav>
       <div className="cont mb-8">
         <main>
-          {post.featuredImage ? (
-            <>
-              <img
-                src={post.featuredImage.node.link}
-                alt={post.featuredImage.node.altText}
-                className="h-[90svh] w-full object-cover brightness-50"
-              />
-              <div>
-                <h1 className="text-3xl">{post.title}</h1>
-                <div>
-                  Дата: <span>{formatDate(post.date)}</span>
-                </div>
-                <div>
-                  Рубрика: <Link href={`/${category}`}>{categoryName}</Link>
-                </div>
-              </div>
-              <Link href={`/${category}`}>
-                &lt; Назад к категории {categoryName}
+          <div className="flex flex-col">
+            <div className="flex justify-between items-center mb-4">
+              <h1 className="text-3xl">{post.title}</h1>
+              <Link
+                href={`/${category}`}
+                className="btn btn-primary text-white border-2 hover:bg-white hover:text-primary text-xl font-normal"
+              >
+                {categoryName}
               </Link>
-            </>
-          ) : (
-            <>
-              <div className="flex flex-col">
-                <h1 className="text-3xl">{post.title}</h1>
-                <div>
-                  Дата: <span>{formatDate(post.date)}</span>
-                </div>
-                <div>
-                  Рубрика: <Link href={`/${category}`}>{categoryName}</Link>
-                </div>
-              </div>
-              <Link href={`/${category}`}>
-                &lt; Назад к категории {categoryName}
-              </Link>
-            </>
-          )}
+            </div>
+            <div>
+              <span>({new Date(post.date).getFullYear()})</span>
+            </div>
+          </div>
         </main>
       </div>
       <div className="px-[16px]">
@@ -108,6 +111,27 @@ export default async function CategoryPostPage({
           />
         </section>
       </div>
+
+      <section className="ind mt-8">
+        <div className="mr-[3vw] md:mr-[32vw]">
+          <TextWithButton
+            text={
+              calculateBlock?.text || 'Заполните бриф на расчет Вашего проекта!'
+            }
+            btnText={calculateBlock?.btnText || 'Обсудить проект'}
+          />
+        </div>
+      </section>
+
+      <section className="ind mt-8">
+        <div className="cont">
+          <CategoryLinks
+            categories={categories}
+            posts={posts}
+            currentCategorySlug={categorySlug}
+          />
+        </div>
+      </section>
     </div>
   )
 }
