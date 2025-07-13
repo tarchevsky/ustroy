@@ -26,25 +26,46 @@ const Footer = ({
   return (
     <footer className="footer cont ind">
       <FadeIn className="w-full bg-white rounded-box p-10">
-        <div className="w-full grid grid-cols-2 md:flex md:justify-between gap-4 md:gap-0">
-          <div className="col-span-1 md:col-span-auto">
+        {/* Верхний блок: мобильный flex, десктоп grid */}
+        <div className="w-full flex flex-col gap-4 md:grid md:grid-cols-4 md:gap-0 md:justify-between md:items-start">
+          {/* Логотип */}
+          <div className="flex flex-row gap-4 items-center md:items-start md:block md:col-span-1 md:gap-0">
             <Logo
-              className="my-4 flex flex-col justify-center z-20 md:h-[84px] md:w-[84px]"
+              className="md:my-4 flex flex-col justify-center z-20 md:h-[84px] md:w-[84px]"
               type="file"
               logo={logoData?.sourceUrl}
               logoAlt={logoData?.altText}
-              width={44}
-              height={44}
+              width={44.34}
+              height={43.812}
             />
+            {/* Навигация только для mobile рядом с логотипом */}
+            <div className="flex flex-col justify-center ml-4 md:hidden">
+              <h5 className="font-medium">Навигация</h5>
+              {menuItems && menuItems.length > 0 && (
+                <ul className="md:mt-4 flex flex-row md:flex-col gap-2">
+                  {menuItems.map((item, index) => (
+                    <li key={index}>
+                      <Link
+                        className="font-normal text-base hover:text-primary"
+                        href={item.uri}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
-          <div className="col-span-1 md:col-span-auto">
-            <h5>Навигация</h5>
+          {/* Навигация для десктопа отдельной колонкой */}
+          <div className="hidden md:block md:col-span-1">
+            <h5 className="font-medium">Навигация</h5>
             {menuItems && menuItems.length > 0 && (
               <ul className="mt-6 flex flex-col gap-2">
                 {menuItems.map((item, index) => (
                   <li key={index}>
                     <Link
-                      className="font-medium text-base hover:text-primary"
+                      className="font-normal text-base hover:text-primary"
                       href={item.uri}
                     >
                       {item.label}
@@ -54,9 +75,10 @@ const Footer = ({
               </ul>
             )}
           </div>
-          <div className="col-span-2 md:col-span-auto">
-            <h5>Контакты</h5>
-            <div className="mt-6 flex flex-col gap-4">
+          {/* Контакты */}
+          <div className="flex flex-col mt-6 md:mt-0 md:col-span-1">
+            <h5 className="hidden md:block font-medium">Контакты</h5>
+            <div className="mt-0 md:mt-6 flex flex-col gap-4">
               {telefon && (
                 <a
                   href={`tel:${telefon}`}
@@ -79,7 +101,7 @@ const Footer = ({
                       />
                     </svg>
                   </span>
-                  {telefon}
+                  <span className="font-normal">{telefon}</span>
                 </a>
               )}
               {telegram && (
@@ -108,7 +130,7 @@ const Footer = ({
                       />
                     </svg>
                   </span>
-                  {telegram}
+                  <span className="font-normal">{telegram}</span>
                 </a>
               )}
               {email && (
@@ -131,19 +153,21 @@ const Footer = ({
                       />
                     </svg>
                   </span>
-                  {email}
+                  <span className="font-normal">{email}</span>
                 </a>
               )}
             </div>
           </div>
-          <div className="col-span-2 md:col-span-auto">
-            <h5>Мы в социальных сетях</h5>
-            <div className="mt-6">
+          {/* Соцсети */}
+          <div className="flex flex-row justify-between items-center md:items-start md:flex-col mt-6 md:mt-0">
+            <h5 className="font-medium">Мы в социальных сетях</h5>
+            <div className="md:mt-6 flex flex-row flex-wrap">
               <Socials vk={vk} instagram={instagram} />
             </div>
           </div>
         </div>
-        <div className="flex flex-row w-full justify-between">
+        {/* Нижний блок: политика и кнопка наверх */}
+        <div className="flex flex-row w-full justify-between mt-8">
           <Link
             href="/privacy-policy"
             className="border-black border-t-[1px] pt-4"
