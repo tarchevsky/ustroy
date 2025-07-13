@@ -1,0 +1,38 @@
+.carousel {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.carouselItem {
+  width: 450px;
+  height: 609px;
+  min-width: 450px;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 300px;
+    height: 406px;
+    min-width: 300px;
+  }
+
+  @media (max-width: 480px) {
+    width: 250px;
+    height: 338px;
+    min-width: 250px;
+  }
+}
+
+.filtersContainer {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

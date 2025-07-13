@@ -9,6 +9,7 @@ import { fetchPageSettings } from '@/services/pageSettingsService'
 
 import AboutBlock from '@/components/aboutBlock/AboutBlock'
 import Hero from '@/components/hero/Hero'
+import PostsCarousel from '@/components/postsCarousel/PostsCarousel'
 import TextWithButton from '@/components/textWithButton/TextWithButton'
 import {
   transformCategories,
@@ -113,9 +114,10 @@ const HomePage = async () => {
           buttonText="Обсудить проект"
         />
       )}
+      {posts && posts.length > 0 && <PostsCarousel posts={posts} />}
       {aboutBlock && <AboutBlock block={aboutBlock} />}
       {customersBlock && (
-        <section className="ind py-8 mt-8">
+        <section className="ind py-8 mt-8 overflow-x-hidden">
           <div className="cont">
             <h2 className="text-4xl font-bold mb-8 text-[#333]">
               НАШИ ЗАКАЗЧИКИ
