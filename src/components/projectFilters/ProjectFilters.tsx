@@ -1,6 +1,5 @@
 'use client'
 import { useMemo } from 'react'
-import styles from './ProjectFilters.module.scss'
 
 interface Category {
   slug: string
@@ -49,7 +48,7 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({
 
   return (
     <div
-      className={`flex gap-2 overflow-x-auto pb-2 ${styles.filtersContainer} ${className}`}
+      className={`ind cont carousel carousel-center gap-2 pb-2 w-full ${className}`}
     >
       <button
         className={`btn btn-primary text-white whitespace-nowrap ${

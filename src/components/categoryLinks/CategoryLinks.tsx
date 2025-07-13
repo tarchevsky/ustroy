@@ -1,7 +1,6 @@
 'use client'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
-import styles from '../projectFilters/ProjectFilters.module.scss'
 
 interface Category {
   slug: string
@@ -59,7 +58,7 @@ const CategoryLinks: React.FC<CategoryLinksProps> = ({
   if (!isClient || !posts || posts.length === 0) {
     return (
       <div
-        className={`flex gap-2 overflow-x-auto pb-2 ${styles.filtersContainer} ${className}`}
+        className={`ind cont carousel carousel-center gap-2 pb-2 w-full ${className}`}
       >
         <div className="btn bg-white text-black border border-gray-200 whitespace-nowrap">
           Все проекты
@@ -70,7 +69,7 @@ const CategoryLinks: React.FC<CategoryLinksProps> = ({
 
   return (
     <div
-      className={`flex gap-2 overflow-x-auto pb-2 ${styles.filtersContainer} ${className}`}
+      className={`ind cont carousel carousel-center gap-2 pb-2 w-full ${className}`}
     >
       <Link
         href="/projects"

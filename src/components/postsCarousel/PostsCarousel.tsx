@@ -86,14 +86,12 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({ posts }) => {
       </div>
 
       {/* Фильтры */}
-      <div className="cont">
-        <ProjectFilters
-          posts={posts}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-          className="mt-6"
-        />
-      </div>
+      <ProjectFilters
+        posts={posts}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+        className="mt-6"
+      />
     </div>
   )
 }

@@ -87,11 +87,11 @@ export default async function CategoryPostPage({
       <div className="cont mb-8">
         <main>
           <div className="flex flex-col">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
               <h1 className="text-3xl">{post.title}</h1>
               <Link
                 href={`/${category}`}
-                className="btn btn-primary text-white border-2 hover:bg-white hover:text-primary text-xl font-normal"
+                className="btn btn-primary text-white border-2 hover:bg-white hover:text-primary text-xl font-normal btn-wide"
               >
                 {categoryName}
               </Link>
@@ -124,13 +124,11 @@ export default async function CategoryPostPage({
       </section>
 
       <section className="ind mt-8">
-        <div className="cont">
-          <CategoryLinks
-            categories={categories}
-            posts={posts}
-            currentCategorySlug={categorySlug}
-          />
-        </div>
+        <CategoryLinks
+          categories={categories}
+          posts={posts}
+          currentCategorySlug={categorySlug}
+        />
       </section>
     </div>
   )

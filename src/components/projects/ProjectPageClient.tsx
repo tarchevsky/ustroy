@@ -108,26 +108,28 @@ export default function ProjectPageClient({
           </div>
         </div>
       )}
-      <div className="cont my-8">
+      <div className="my-8">
         <ProjectFilters
           posts={posts}
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
           className="mb-6 -mx-4 px-4"
         />
-        <div className="mb-6">
-          <h1
-            className="font-medium break-words"
-            style={{
-              fontSize: 'clamp(1.5rem, 4vw, 2.375rem)',
-              lineHeight: '1.1',
-            }}
-          >
-            {pageTitle}
-          </h1>
+        <div className="cont">
+          <div className="mb-6">
+            <h1
+              className="font-medium break-words"
+              style={{
+                fontSize: 'clamp(1.5rem, 4vw, 2.375rem)',
+                lineHeight: '1.1',
+              }}
+            >
+              {pageTitle}
+            </h1>
+          </div>
+          {/* Сетка проектов */}
+          <ProjectGrid posts={filteredPosts} />
         </div>
-        {/* Сетка проектов */}
-        <ProjectGrid posts={filteredPosts} />
       </div>
     </div>
   )
