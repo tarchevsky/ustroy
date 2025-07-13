@@ -107,8 +107,34 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({ posts }) => {
       rowIdx++
     ) {
       const row = pattern[rowIdx]
+      // Определяем пропорции колонок для каждой строки
+      let gridCols = ''
+      if (row.length === 2) {
+        // 2 картинки: первая строка (450/1205, 738/1205), третья строка (738/1205, 450/1205)
+        if (row[0].w === 450) {
+          gridCols = '[450fr_738fr] md:grid-cols-[450fr_738fr]'
+        } else {
+          gridCols = '[738fr_450fr] md:grid-cols-[738fr_450fr]'
+        }
+      } else if (row.length === 3) {
+        // 3 картинки: все по 390/1205
+        gridCols = '[390fr_390fr_390fr] md:grid-cols-[390fr_390fr_390fr]'
+      }
       rows.push(
-        <div key={rows.length} className="hidden md:flex gap-4 mb-4">
+        <div
+          key={rows.length}
+          className={`hidden md:grid gap-4 mb-4 ${
+            row.length === 2 ? 'grid-cols-2' : 'grid-cols-3'
+          }`}
+          style={{
+            gridTemplateColumns:
+              row.length === 2
+                ? row[0].w === 450
+                  ? `${(450 / 1205) * 100}% ${(738 / 1205) * 100}%`
+                  : `${(738 / 1205) * 100}% ${(450 / 1205) * 100}%`
+                : `repeat(3, ${(390 / 1205) * 100}%)`,
+          }}
+        >
           {row.map((cell, cellIdx) => {
             const post = posts[postIdx]
             postIdx++
@@ -126,9 +152,8 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({ posts }) => {
                 className="relative rounded-box overflow-hidden flex items-end bg-gray-200 group"
                 style={{
                   aspectRatio: `${cell.w} / ${cell.h}`,
-                  width: `calc(${(cell.w / 1205) * 100}% - 8px)`,
-                  minHeight: 120,
-                  maxWidth: cell.w,
+                  width: '100%',
+                  minWidth: 0,
                 }}
               >
                 {post.featuredImage?.node?.link && (
@@ -165,7 +190,7 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({ posts }) => {
     }
   }
   return (
-    <div className="w-full max-w-[1205px] mx-auto">
+    <div className="w-full">
       {mobileRows}
       {rows}
     </div>

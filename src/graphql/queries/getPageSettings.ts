@@ -92,6 +92,11 @@ export const GET_PAGE_SETTINGS = gql`
               }
             }
           }
+          ... on TypesOfContentChooseCalculateLayout {
+            fieldGroupName
+            text
+            btnText
+          }
         }
       }
     }

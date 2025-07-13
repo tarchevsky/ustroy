@@ -88,11 +88,18 @@ export interface TypesOfContentChooseCustomersLayout {
   }>
 }
 
+export interface TypesOfContentChooseCalculateLayout {
+  fieldGroupName: string
+  text: string
+  btnText: string
+}
+
 export type TypesOfContentChoose =
   | TypesOfContentChooseHeroLayout
   | TypesOfContentChooseFeaturedProjectsLayout
   | TypesOfContentChooseAboutLayout
   | TypesOfContentChooseCustomersLayout
+  | TypesOfContentChooseCalculateLayout
 
 export interface TypesOfContent {
   choose: TypesOfContentChoose[]

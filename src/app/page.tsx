@@ -9,6 +9,7 @@ import { fetchPageSettings } from '@/services/pageSettingsService'
 
 import AboutBlock from '@/components/aboutBlock/AboutBlock'
 import Hero from '@/components/hero/Hero'
+import TextWithButton from '@/components/textWithButton/TextWithButton'
 import {
   transformCategories,
   transformCategoryPosts,
@@ -93,6 +94,13 @@ const HomePage = async () => {
     | import('@/graphql/types/pageSettingsTypes').TypesOfContentChooseCustomersLayout
     | undefined
 
+  const calculateBlock = typesOfContent.choose.find(
+    (item: any) =>
+      item.fieldGroupName === 'TypesOfContentChooseCalculateLayout',
+  ) as
+    | import('@/graphql/types/pageSettingsTypes').TypesOfContentChooseCalculateLayout
+    | undefined
+
   return (
     <div>
       {/* <TypesOfContentDebug data={typesOfContent} /> */}
@@ -116,6 +124,16 @@ const HomePage = async () => {
               companies={transformCustomersFromPageSettings(
                 customersBlock.repeater,
               )}
+            />
+          </div>
+        </section>
+      )}
+      {calculateBlock && (
+        <section className="ind mt-8">
+          <div className="mr-[3vw] md:mr-[32vw]">
+            <TextWithButton
+              text={calculateBlock.text}
+              btnText={calculateBlock.btnText}
             />
           </div>
         </section>
