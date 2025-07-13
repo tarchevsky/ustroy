@@ -4,6 +4,7 @@ import ContentBlock from '@/components/contentBlock/ContentBlock'
 import CustomersBlock from '@/components/customersBlock/CustomersBlock'
 import FadeIn from '@/components/fadeIn/FadeIn'
 import Hero from '@/components/hero/Hero'
+import PageTitle from '@/components/PageTitle'
 import { TypesOfContentChooseHeroLayout } from '@/graphql/types/pageSettingsTypes'
 import { getApolloClient } from '@/lib/apollo-client'
 import { fetchChildCategories } from '@/services/pageService'
@@ -48,6 +49,13 @@ export default async function WpPageComponent({
           buttonText="Обсудить проект"
         />
       )}
+
+      {/* Заголовок страницы под header */}
+
+      <div className="cont">
+        <PageTitle pageId={pageData.id} fallback={pageData.title} />
+      </div>
+
       {aboutBlock && <AboutBlock block={aboutBlock} />}
       {customersBlock && <CustomersBlock block={customersBlock} />}
 

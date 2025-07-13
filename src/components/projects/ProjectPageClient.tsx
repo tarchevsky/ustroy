@@ -1,12 +1,12 @@
 'use client'
-import { useMemo, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { useEffect, useMemo, useState } from 'react'
 import styles from './ProjectPageClient.module.css'
 
 interface ProjectPageClientProps {
   heroBlock: any
   aboutBlock: any
   posts: any[]
-  pageTitle?: string
   companies?: any[]
 }
 
@@ -14,10 +14,27 @@ export default function ProjectPageClient({
   heroBlock,
   aboutBlock,
   posts,
-  pageTitle,
   companies = [],
 }: ProjectPageClientProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const pathname = usePathname()
+  const [pageId, setPageId] = useState<string | null>(null)
+  const [pageTitle, setPageTitle] = useState<string>('Все проекты')
+
+  useEffect(() => {
+    const slug = pathname.replace(/^\//, '')
+    console.log('🔍 ProjectPageClient: pathname =', pathname, 'slug =', slug)
+    fetch(`/api/page-title?slug=${encodeURIComponent(slug)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('🔍 ProjectPageClient: API response =', data)
+        if (data.id) setPageId(data.id)
+        if (data.title) setPageTitle(data.title)
+      })
+      .catch((error) => {
+        console.error('🔍 ProjectPageClient: API error =', error)
+      })
+  }, [pathname])
 
   // Собираем уникальные категории из всех постов
   const uniqueCategories = useMemo(() => {
@@ -48,7 +65,7 @@ export default function ProjectPageClient({
     heroBlock && heroBlock.header && String(heroBlock.header).trim() !== ''
   return (
     <div>
-      {showHero ? (
+      {showHero && (
         <div className="mb-8">
           <div className="mb-4 cont">
             <h1 className="text-3xl font-bold">{heroBlock.header}</h1>
@@ -64,11 +81,7 @@ export default function ProjectPageClient({
             )}
           </div>
         </div>
-      ) : pageTitle ? (
-        <div className="mb-8 cont">
-          <h1 className="text-3xl font-bold text-white">{pageTitle}</h1>
-        </div>
-      ) : null}
+      )}
       {aboutBlock && (
         <div className="mb-8">
           <div>{aboutBlock.title}</div>
@@ -105,7 +118,7 @@ export default function ProjectPageClient({
           className={`flex gap-2 mb-6 overflow-x-auto pb-2 -mx-4 px-4 ${styles.scrollContainer}`}
         >
           <button
-            className={`btn btn-primary border-white text-white whitespace-nowrap ${selectedCategory ? 'btn-outline text-primary bg-white border-primary' : ''}`}
+            className={`btn btn-primary text-white whitespace-nowrap ${selectedCategory ? ' btn-outline bg-white border-white text-black' : ''}`}
             onClick={() => setSelectedCategory(null)}
           >
             Все проекты
@@ -119,6 +132,17 @@ export default function ProjectPageClient({
               {cat.name}
             </button>
           ))}
+        </div>
+        <div className="mb-6">
+          <h1
+            className="font-medium break-words"
+            style={{
+              fontSize: 'clamp(1.5rem, 4vw, 2.375rem)',
+              lineHeight: '1.1',
+            }}
+          >
+            {pageTitle}
+          </h1>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredPosts.length === 0 && (

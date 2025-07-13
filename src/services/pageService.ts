@@ -130,3 +130,22 @@ export async function fetchAllCategories(
 
   return data.categories.edges || []
 }
+
+/**
+ * Получение страницы по ID
+ */
+export async function fetchPageById(
+  client: ApolloClient<NormalizedCacheObject>,
+  pageId: string,
+) {
+  if (!pageId) {
+    return null
+  }
+
+  const { data } = await client.query({
+    query: GET_PAGE,
+    variables: { id: pageId },
+  })
+
+  return data?.page || null
+}

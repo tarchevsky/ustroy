@@ -4,10 +4,12 @@ import { Metadata } from 'next'
 import { ChildCategoryNode } from '@/graphql/types/childCategoriesTypes'
 import { TypesOfContentChooseHeroLayout } from '@/graphql/types/pageSettingsTypes'
 import { getApolloClient } from '@/lib/apollo-client'
-import { fetchChildCategories, fetchHomePageData } from '@/services/pageService'
+import {
+  fetchChildCategories,
+  fetchHomePageData,
+  fetchPageById,
+} from '@/services/pageService'
 import { fetchPageSettings } from '@/services/pageSettingsService'
-
-import ProjectPageClient from '@/components/projects/ProjectPageClient'
 import {
   transformCategories,
   transformCategoryPosts,
@@ -15,6 +17,8 @@ import {
   transformPosts,
   transformPostsByCategories,
 } from '@/services/transformService'
+
+import ProjectPageClient from '@/components/projects/ProjectPageClient'
 
 export const revalidate = 3600
 
@@ -34,11 +38,13 @@ export async function generateMetadata(): Promise<Metadata> {
 const ProjectsPage = async () => {
   const apolloClient: ApolloClient<NormalizedCacheObject> = getApolloClient()
 
+  // Получаем данные страницы
+  const page = await fetchPageById(apolloClient, PROJECTS_PAGE_ID)
+
   // Получаем typesOfContent
   const typesOfContent = await fetchPageSettings(apolloClient, PROJECTS_PAGE_ID)
 
   const {
-    page,
     pagecontent,
     posts: postsData,
     category: categoryData,
@@ -58,11 +64,11 @@ const ProjectsPage = async () => {
   const categories = transformCategories(categoriesData)
   const companies = transformCompanies(pagecontent?.companies || [])
 
-  const heroBlock = typesOfContent.choose.find(
+  const heroBlock = typesOfContent.choose?.find(
     (item: any) => item.fieldGroupName === 'TypesOfContentChooseHeroLayout',
   ) as TypesOfContentChooseHeroLayout | undefined
 
-  const aboutBlock = typesOfContent.choose.find(
+  const aboutBlock = typesOfContent.choose?.find(
     (item: any) => item.fieldGroupName === 'TypesOfContentChooseAboutLayout',
   )
 
@@ -82,7 +88,6 @@ const ProjectsPage = async () => {
         heroBlock={heroBlock}
         aboutBlock={aboutBlock}
         posts={posts}
-        pageTitle={page?.title}
         companies={companies}
       />
     </>
