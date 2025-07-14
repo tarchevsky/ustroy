@@ -28,6 +28,33 @@ export const GET_POST_BY_SLUG = gql`
             text
             btnText
           }
+          ... on TypesOfContentChooseProjectPicturesLayout {
+            fieldGroupName
+            img1 {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            img2 {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            img3 {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            img4 {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+          }
         }
       }
       categories {

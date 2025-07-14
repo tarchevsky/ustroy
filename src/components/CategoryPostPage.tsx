@@ -1,10 +1,14 @@
 import { GET_CATEGORIES } from '@/graphql/queries/getCategories'
 import { GET_POST_BY_SLUG } from '@/graphql/queries/getPostBySlug'
 import { GET_POSTS } from '@/graphql/queries/getPosts'
-import type { TypesOfContentChooseCalculateLayout } from '@/graphql/types/pageSettingsTypes'
+import type {
+  TypesOfContentChooseCalculateLayout,
+  TypesOfContentChooseProjectPicturesLayout,
+} from '@/graphql/types/pageSettingsTypes'
 import { getApolloClient } from '@/lib/apollo-client'
 import Link from 'next/link'
 import CategoryLinks from './categoryLinks/CategoryLinks'
+import ProjectPicturesGrid from './projects/ProjectPicturesGrid'
 import TextWithButton from './textWithButton/TextWithButton'
 
 interface CategoryPostPageProps {
@@ -56,6 +60,12 @@ export default async function CategoryPostPage({
       item.fieldGroupName === 'TypesOfContentChooseCalculateLayout',
   ) as TypesOfContentChooseCalculateLayout | undefined
 
+  // Получаем блок с четырьмя картинками из typesOfContent
+  const projectPicturesBlock = post.typesOfContent?.choose?.find(
+    (item: any) =>
+      item.fieldGroupName === 'TypesOfContentChooseProjectPicturesLayout',
+  ) as TypesOfContentChooseProjectPicturesLayout | undefined
+
   // Хлебные крошки
   const breadcrumbs: Array<{ name: string; href?: string }> = [
     { name: 'Главная', href: '/' },
@@ -102,14 +112,22 @@ export default async function CategoryPostPage({
           </div>
         </main>
       </div>
-      <div className="px-[16px]">
-        <section className="prose m-auto">
+      <div className="cont px-[16px]">
+        <section className="prose max-w-full">
           <div
             dangerouslySetInnerHTML={{
               __html: post.content,
             }}
           />
         </section>
+        {projectPicturesBlock && (
+          <ProjectPicturesGrid
+            img1={projectPicturesBlock.img1}
+            img2={projectPicturesBlock.img2}
+            img3={projectPicturesBlock.img3}
+            img4={projectPicturesBlock.img4}
+          />
+        )}
       </div>
 
       <section className="ind mt-8">

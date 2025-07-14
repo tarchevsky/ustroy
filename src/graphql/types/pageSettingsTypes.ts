@@ -94,12 +94,41 @@ export interface TypesOfContentChooseCalculateLayout {
   btnText: string
 }
 
+export interface TypesOfContentChooseProjectPicturesLayout {
+  fieldGroupName: string
+  img1: {
+    node: {
+      altText: string
+      sourceUrl: string
+    }
+  }
+  img2: {
+    node: {
+      altText: string
+      sourceUrl: string
+    }
+  }
+  img3: {
+    node: {
+      altText: string
+      sourceUrl: string
+    }
+  }
+  img4: {
+    node: {
+      altText: string
+      sourceUrl: string
+    }
+  }
+}
+
 export type TypesOfContentChoose =
   | TypesOfContentChooseHeroLayout
   | TypesOfContentChooseFeaturedProjectsLayout
   | TypesOfContentChooseAboutLayout
   | TypesOfContentChooseCustomersLayout
   | TypesOfContentChooseCalculateLayout
+  | TypesOfContentChooseProjectPicturesLayout
 
 export interface TypesOfContent {
   choose: TypesOfContentChoose[]
