@@ -21,7 +21,7 @@ import {
 } from '@/services/transformService'
 import { Companies } from '@/ui/companies/Companies'
 
-export const revalidate = 0 // Ревалидация каждый час (3600 секунд)
+export const revalidate = 5 // Ревалидация каждый час (3600 секунд)
 
 // ID константы
 const PAGE_ID = 'cG9zdDoxNQ=='
