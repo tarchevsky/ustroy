@@ -1,8 +1,12 @@
 'use client'
 
-import { TypesOfContentChooseCustomersLayout } from '@/graphql/types/pageSettingsTypes'
+import {
+  TypesOfContentChooseCalculateLayout,
+  TypesOfContentChooseCustomersLayout,
+} from '@/graphql/types/pageSettingsTypes'
 import { transformCustomersFromPageSettings } from '@/services/transformService'
 import { Companies } from '@/ui/companies/Companies'
+import TextWithButton from '../textWithButton/TextWithButton'
 
 interface ConditionalRendererProps {
   typesOfContent?: {
@@ -21,48 +25,75 @@ export const ConditionalRenderer = ({
 
   return (
     <>
-      {/* Companies блок */}
-      <ConditionalCompanies
-        typesOfContent={typesOfContent}
-        pagecontent={pagecontent}
-      />
+      {/* Рендерим компоненты в порядке добавления в WordPress */}
+      {typesOfContent.choose.map((block, index) => {
+        switch (block.fieldGroupName) {
+          case 'TypesOfContentChooseCustomersLayout':
+            return (
+              <ConditionalCompanies
+                key={index}
+                block={block}
+                pagecontent={pagecontent}
+              />
+            )
+          case 'TypesOfContentChooseCalculateLayout':
+            return <ConditionalTextWithButton key={index} block={block} />
+          default:
+            return null
+        }
+      })}
 
-      {/* Здесь можно добавить другие условные блоки */}
-      {/* <ConditionalHero typesOfContent={typesOfContent} /> */}
-      {/* <ConditionalAbout typesOfContent={typesOfContent} /> */}
-      {/* <ConditionalCalculate typesOfContent={typesOfContent} /> */}
+      {/* Проверяем pagecontent для Companies (если нет в typesOfContent) */}
+      {!typesOfContent.choose.some(
+        (block) =>
+          block.fieldGroupName === 'TypesOfContentChooseCustomersLayout',
+      ) &&
+        pagecontent?.companies &&
+        pagecontent.companies.length > 0 && (
+          <ConditionalCompaniesFromPageContent pagecontent={pagecontent} />
+        )}
     </>
   )
 }
 
-// Компонент для Companies
+// Компонент для Companies из typesOfContent
 const ConditionalCompanies = ({
-  typesOfContent,
+  block,
   pagecontent,
-}: ConditionalRendererProps) => {
-  // Проверяем наличие блока customers в typesOfContent
-  const customersBlock = typesOfContent?.choose?.find(
-    (item: any) =>
-      item.fieldGroupName === 'TypesOfContentChooseCustomersLayout',
-  ) as TypesOfContentChooseCustomersLayout | undefined
-
-  // Проверяем наличие companies в pagecontent
-  const companiesFromPageContent = pagecontent?.companies
-
-  // Если есть данные из typesOfContent, используем их
-  if (customersBlock?.repeater && customersBlock.repeater.length > 0) {
+}: {
+  block: TypesOfContentChooseCustomersLayout
+  pagecontent?: any
+}) => {
+  if (block?.repeater && block.repeater.length > 0) {
     return (
       <Companies
-        companies={transformCustomersFromPageSettings(customersBlock.repeater)}
+        companies={transformCustomersFromPageSettings(block.repeater)}
       />
     )
   }
+  return null
+}
 
-  // Если есть данные из pagecontent, используем их
-  if (companiesFromPageContent && companiesFromPageContent.length > 0) {
-    return <Companies companies={companiesFromPageContent} />
+// Компонент для Companies из pagecontent
+const ConditionalCompaniesFromPageContent = ({
+  pagecontent,
+}: {
+  pagecontent: any
+}) => {
+  if (pagecontent?.companies && pagecontent.companies.length > 0) {
+    return <Companies companies={pagecontent.companies} />
   }
+  return null
+}
 
-  // Если данных нет, не рендерим компонент
+// Компонент для TextWithButton
+const ConditionalTextWithButton = ({
+  block,
+}: {
+  block: TypesOfContentChooseCalculateLayout
+}) => {
+  if (block) {
+    return <TextWithButton text={block.text} btnText={block.btnText} />
+  }
   return null
 }

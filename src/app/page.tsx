@@ -11,7 +11,6 @@ import AboutBlock from '@/components/aboutBlock/AboutBlock'
 import { ConditionalRenderer } from '@/components/conditional/ConditionalRenderer'
 import Hero from '@/components/hero/Hero'
 import PostsCarousel from '@/components/postsCarousel/PostsCarousel'
-import TextWithButton from '@/components/textWithButton/TextWithButton'
 import {
   transformCategories,
   transformCategoryPosts,
@@ -87,20 +86,6 @@ const HomePage = async () => {
     (item: any) => item.fieldGroupName === 'TypesOfContentChooseAboutLayout',
   )
 
-  const customersBlock = typesOfContent.choose.find(
-    (item: any) =>
-      item.fieldGroupName === 'TypesOfContentChooseCustomersLayout',
-  ) as
-    | import('@/graphql/types/pageSettingsTypes').TypesOfContentChooseCustomersLayout
-    | undefined
-
-  const calculateBlock = typesOfContent.choose.find(
-    (item: any) =>
-      item.fieldGroupName === 'TypesOfContentChooseCalculateLayout',
-  ) as
-    | import('@/graphql/types/pageSettingsTypes').TypesOfContentChooseCalculateLayout
-    | undefined
-
   return (
     <div>
       {/* <TypesOfContentDebug data={typesOfContent} /> */}
@@ -119,12 +104,6 @@ const HomePage = async () => {
         typesOfContent={typesOfContent}
         pagecontent={pagecontent}
       />
-      {calculateBlock && (
-        <TextWithButton
-          text={calculateBlock.text}
-          btnText={calculateBlock.btnText}
-        />
-      )}
     </div>
   )
 }

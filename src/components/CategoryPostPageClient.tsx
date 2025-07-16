@@ -5,7 +5,6 @@ import CategoryLinks from './categoryLinks/CategoryLinks'
 import { ConditionalRenderer } from './conditional/ConditionalRenderer'
 import { useCategoryPostData } from './hooks/useCategoryPostData'
 import ProjectPicturesGrid from './projects/ProjectPicturesGrid'
-import TextWithButton from './textWithButton/TextWithButton'
 import { Breadcrumbs } from './ui/Breadcrumbs'
 
 interface CategoryPostPageClientProps {
@@ -33,12 +32,6 @@ export default function CategoryPostPageClient({
   const categoryNode = post.categories?.edges[0]?.node
   const categoryName = categoryNode?.name || category
   const categorySlug = categoryNode?.slug || category
-
-  // Получаем calculateBlock из typesOfContent
-  const calculateBlock = post.typesOfContent?.choose?.find(
-    (item: any) =>
-      item.fieldGroupName === 'TypesOfContentChooseCalculateLayout',
-  )
 
   // Получаем блок с четырьмя картинками из typesOfContent
   const projectPicturesBlock = post.typesOfContent?.choose?.find(
@@ -101,13 +94,6 @@ export default function CategoryPostPageClient({
           />
         )}
       </div>
-
-      <TextWithButton
-        text={
-          calculateBlock?.text || 'Заполните бриф на расчет Вашего проекта!'
-        }
-        btnText={calculateBlock?.btnText || 'Обсудить проект'}
-      />
 
       <section className="ind">
         <CategoryLinks
