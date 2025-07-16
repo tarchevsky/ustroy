@@ -18,7 +18,7 @@ interface PageProps {
   }
 }
 
-export const revalidate = 3600 // 1 час, можно уменьшить для более частого обновления
+export const revalidate = 0 // 1 час, можно уменьшить для более частого обновления
 
 const getClient = () => getApolloClient()
 

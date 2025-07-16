@@ -20,7 +20,7 @@ import {
 
 import ProjectPageClient from '@/components/projects/ProjectPageClient'
 
-export const revalidate = 3600
+export const revalidate = 0
 
 // ID константы для страницы projects
 const PROJECTS_PAGE_ID = 'cG9zdDoyMA==' // Замените на реальный ID страницы projects
