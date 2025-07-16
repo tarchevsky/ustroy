@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
 
   // Проверка секретного токена (в production рекомендуется использовать)
   // В development можно закомментировать эту проверку
-  const revalidateSecret = process.env.REVALIDATE_SECRET || 'your-secret-token'
+  const revalidateSecret = process.env.REVALIDATE_SECRET
   if (secret !== revalidateSecret) {
     return NextResponse.json(
       { message: 'Неверный секретный токен' },

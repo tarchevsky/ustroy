@@ -30,7 +30,7 @@ const Hero = ({
           )}
           <div className="flex justify-between gap-8 flex-col md:grid md:grid-cols-[auto_1fr] md:gap-16 lg:gap-[115px] flex-wrap sm:flex-nowrap">
             {buttonText ? (
-              <button className="col-span-1 btn btn-lg btn-block md:btn-wide font-medium text-base-100 btn-primary hover:bg-base-100 hover:text-primary hover:border-primary hover:border-2">
+              <button className="col-span-1 btn btn-lg btn-block md:btn-wide font-medium text-white btn-primary hover:bg-base-100 hover:text-primary hover:border-primary hover:border-2">
                 {buttonText}
               </button>
             ) : (

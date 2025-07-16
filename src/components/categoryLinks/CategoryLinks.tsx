@@ -58,7 +58,7 @@ const CategoryLinks: React.FC<CategoryLinksProps> = ({
   if (!isClient || !posts || posts.length === 0) {
     return (
       <div
-        className={`ind cont carousel carousel-center gap-2 pb-2 w-full ${className}`}
+        className={`ind cont carousel carousel-center gap-2 w-full ${className}`}
       >
         <div className="btn bg-white text-black border border-gray-200 whitespace-nowrap">
           Все проекты
@@ -68,28 +68,29 @@ const CategoryLinks: React.FC<CategoryLinksProps> = ({
   }
 
   return (
-    <div
-      className={`ind cont carousel carousel-center gap-2 pb-2 w-full ${className}`}
-    >
-      <Link
-        href="/projects"
-        className={`btn bg-white text-black border border-gray-200 whitespace-nowrap hover:border-primary hover:text-primary`}
-      >
-        Все проекты
-      </Link>
-      {uniqueCategories.map((cat) => (
+    <div className="cont">
+      <h5 className="mb-6 text-xl">Выберите другую категорию:</h5>
+      <div className={`carousel carousel-center gap-2 w-full ${className}`}>
         <Link
-          key={cat.slug}
-          href={`/${cat.slug}`}
-          className={`btn bg-white text-black border border-gray-200 whitespace-nowrap ${
-            currentCategorySlug === cat.slug
-              ? 'btn-primary text-primary border-primary border-2'
-              : 'hover:border-primary hover:text-primary'
-          }`}
+          href="/projects"
+          className={`btn bg-white text-black border border-gray-200 whitespace-nowrap hover:border-primary hover:text-primary`}
         >
-          {cat.name}
+          Все проекты
         </Link>
-      ))}
+        {uniqueCategories.map((cat) => (
+          <Link
+            key={cat.slug}
+            href={`/${cat.slug}`}
+            className={`btn bg-white text-black border border-gray-200 whitespace-nowrap ${
+              currentCategorySlug === cat.slug
+                ? 'btn-primary text-primary border-primary border-2'
+                : 'hover:border-primary hover:text-primary'
+            }`}
+          >
+            {cat.name}
+          </Link>
+        ))}
+      </div>
     </div>
   )
 }
