@@ -55,6 +55,18 @@ export const GET_POST_BY_SLUG = gql`
               }
             }
           }
+          ... on TypesOfContentChooseCustomersLayout {
+            fieldGroupName
+            repeater {
+              fieldGroupName
+              kartinka {
+                node {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+          }
         }
       }
       categories {

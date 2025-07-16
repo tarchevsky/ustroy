@@ -51,6 +51,9 @@ export interface Post {
     title: string
     metaDesc: string
   }
+  typesOfContent?: {
+    choose?: any[]
+  }
   categories?: {
     edges: Array<{
       node: {

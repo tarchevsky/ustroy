@@ -1,13 +1,13 @@
 import AboutBlock from '@/components/aboutBlock/AboutBlock'
 import ChildCategoriesBlock from '@/components/ChildCategoriesBlock'
 import ContentBlock from '@/components/contentBlock/ContentBlock'
-import CustomersBlock from '@/components/customersBlock/CustomersBlock'
 import FadeIn from '@/components/fadeIn/FadeIn'
 import Hero from '@/components/hero/Hero'
 import PageTitle from '@/components/PageTitle'
 import { TypesOfContentChooseHeroLayout } from '@/graphql/types/pageSettingsTypes'
 import { getApolloClient } from '@/lib/apollo-client'
 import { fetchChildCategories } from '@/services/pageService'
+import { ConditionalRenderer } from './conditional/ConditionalRenderer'
 
 interface WpPageComponentProps {
   pageData: any
@@ -25,11 +25,6 @@ export default async function WpPageComponent({
   const aboutBlock = typesOfContent?.choose?.find(
     (item: any) => item.fieldGroupName === 'TypesOfContentChooseAboutLayout',
   )
-
-  const customersBlock = typesOfContent?.choose?.find(
-    (item: any) =>
-      item.fieldGroupName === 'TypesOfContentChooseCustomersLayout',
-  ) as any
 
   // Получаем дочерние категории для страницы projects
   let childCategories: any[] = []
@@ -51,13 +46,17 @@ export default async function WpPageComponent({
       )}
 
       {/* Заголовок страницы под header */}
-
       <div className="cont">
         <PageTitle pageId={pageData.id} fallback={pageData.title} />
       </div>
 
       {aboutBlock && <AboutBlock block={aboutBlock} />}
-      {customersBlock && <CustomersBlock block={customersBlock} />}
+
+      {/* Универсальный рендерер для условных блоков */}
+      <ConditionalRenderer
+        typesOfContent={typesOfContent}
+        pagecontent={pageData.pagecontent}
+      />
 
       {/* Дочерние категории для страницы projects */}
       {pageData.slug === 'projects' && childCategories.length > 0 && (

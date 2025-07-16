@@ -47,7 +47,7 @@ export const Companies = ({ companies }: CompaniesProps) => {
     return (
       <FadeIn className="cont">
         <section className="ind py-8 mt-8 overflow-x-hidden">
-          <h2 className="text-4xl font-bold mb-8 text-[#333] uppercase">
+          <h2 className="text-3xl font-bold mb-8 text-[#333] uppercase">
             Наши заказчики
           </h2>
 
@@ -85,7 +85,9 @@ export const Companies = ({ companies }: CompaniesProps) => {
   return (
     <section className="ind py-8 mt-8 overflow-x-hidden">
       <FadeIn className="cont">
-        <h2 className="text-4xl font-bold mb-8 text-[#333]">НАШИ ЗАКАЗЧИКИ</h2>
+        <h2 className="text-[32px] font-bold mb-8 text-[#333] uppercase">
+          Наши заказчики
+        </h2>
         <div className="flex flex-col gap-6">
           <div
             ref={topRef}

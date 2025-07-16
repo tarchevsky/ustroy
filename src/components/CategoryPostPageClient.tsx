@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import CategoryLinks from './categoryLinks/CategoryLinks'
+import { ConditionalRenderer } from './conditional/ConditionalRenderer'
 import { useCategoryPostData } from './hooks/useCategoryPostData'
 import ProjectPicturesGrid from './projects/ProjectPicturesGrid'
 import TextWithButton from './textWithButton/TextWithButton'
@@ -76,6 +77,13 @@ export default function CategoryPostPageClient({
           </div>
         </main>
       </div>
+
+      {/* Универсальный рендерер для условных блоков */}
+      <ConditionalRenderer
+        typesOfContent={post.typesOfContent}
+        pagecontent={undefined}
+      />
+
       <div className="cont px-[16px]">
         <section className="prose max-w-full">
           <div
@@ -94,16 +102,12 @@ export default function CategoryPostPageClient({
         )}
       </div>
 
-      <section className="ind mt-8">
-        <div className="mr-[3vw] md:mr-[32vw]">
-          <TextWithButton
-            text={
-              calculateBlock?.text || 'Заполните бриф на расчет Вашего проекта!'
-            }
-            btnText={calculateBlock?.btnText || 'Обсудить проект'}
-          />
-        </div>
-      </section>
+      <TextWithButton
+        text={
+          calculateBlock?.text || 'Заполните бриф на расчет Вашего проекта!'
+        }
+        btnText={calculateBlock?.btnText || 'Обсудить проект'}
+      />
 
       <section className="ind">
         <CategoryLinks

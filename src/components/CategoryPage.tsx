@@ -2,6 +2,7 @@ import FadeIn from '@/components/fadeIn/FadeIn'
 import { ChildCategory } from '@/graphql/types/categoryWithChildrenTypes'
 import { transformCategoryBySlugPosts } from '@/services/transformService'
 import Link from 'next/link'
+import { ConditionalRenderer } from './conditional/ConditionalRenderer'
 import ProjectGrid from './projects/ProjectGrid'
 
 interface CategoryPageProps {
@@ -53,6 +54,9 @@ export default function CategoryPage({ categoryData }: CategoryPageProps) {
           <p className="text-gray-600 mt-4">{categoryData.description}</p>
         )}
       </FadeIn>
+
+      {/* Универсальный рендерер для условных блоков */}
+      <ConditionalRenderer typesOfContent={undefined} pagecontent={undefined} />
 
       {/* Дочерние категории */}
       {childCategories.length > 0 && (

@@ -53,22 +53,26 @@ const TextWithButton = ({
 
   if (!modalContent) {
     return (
-      <FadeIn className="ind cont-left bg-white rounded-r-box pl-2">
-        <div className="mt-16 flex flex-col md:flex-row items-center justify-between md:gap-4">
-          <p
-            className="text-2xl font-normal py-6 lg:py-0"
-            style={{ fontFamily: 'Unbounded Variable, sans-serif' }}
-          >
-            {text || 'Остались вопросы?'}
-          </p>
-          <button
-            className="btn btn-lg btn-block btn-primary text-white hover:bg-white hover:text-primary hover:border-primary hover:border-2 md:btn-wide my-2 md:my-4 mr-4"
-            type="button"
-          >
-            {btnText || 'Задать вопрос'}
-          </button>
+      <section className="ind mt-8">
+        <div className="mr-[3vw] md:mr-[32vw]">
+          <FadeIn className="ind cont-left bg-white rounded-r-box pl-2">
+            <div className="mt-16 flex flex-col md:flex-row items-center justify-between md:gap-4">
+              <p
+                className="text-2xl font-normal py-6 lg:py-0"
+                style={{ fontFamily: 'Unbounded Variable, sans-serif' }}
+              >
+                {text || 'Остались вопросы?'}
+              </p>
+              <button
+                className="btn btn-lg btn-block btn-primary text-white hover:bg-white hover:text-primary hover:border-primary hover:border-2 md:btn-wide my-2 md:my-4 mr-4"
+                type="button"
+              >
+                {btnText || 'Задать вопрос'}
+              </button>
+            </div>
+          </FadeIn>
         </div>
-      </FadeIn>
+      </section>
     )
   }
 

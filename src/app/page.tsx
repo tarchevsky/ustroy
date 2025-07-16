@@ -8,6 +8,7 @@ import { fetchHomePageData } from '@/services/pageService'
 import { fetchPageSettings } from '@/services/pageSettingsService'
 
 import AboutBlock from '@/components/aboutBlock/AboutBlock'
+import { ConditionalRenderer } from '@/components/conditional/ConditionalRenderer'
 import Hero from '@/components/hero/Hero'
 import PostsCarousel from '@/components/postsCarousel/PostsCarousel'
 import TextWithButton from '@/components/textWithButton/TextWithButton'
@@ -15,11 +16,9 @@ import {
   transformCategories,
   transformCategoryPosts,
   transformCompanies,
-  transformCustomersFromPageSettings,
   transformPosts,
   transformPostsByCategories,
 } from '@/services/transformService'
-import { Companies } from '@/ui/companies/Companies'
 
 export const revalidate = 5
 
@@ -116,22 +115,15 @@ const HomePage = async () => {
       )}
       {posts && posts.length > 0 && <PostsCarousel posts={posts} />}
       {aboutBlock && <AboutBlock block={aboutBlock} />}
-      {customersBlock && (
-        <Companies
-          companies={transformCustomersFromPageSettings(
-            customersBlock.repeater,
-          )}
-        />
-      )}
+      <ConditionalRenderer
+        typesOfContent={typesOfContent}
+        pagecontent={pagecontent}
+      />
       {calculateBlock && (
-        <section className="ind mt-8">
-          <div className="mr-[3vw] md:mr-[32vw]">
-            <TextWithButton
-              text={calculateBlock.text}
-              btnText={calculateBlock.btnText}
-            />
-          </div>
-        </section>
+        <TextWithButton
+          text={calculateBlock.text}
+          btnText={calculateBlock.btnText}
+        />
       )}
     </div>
   )
