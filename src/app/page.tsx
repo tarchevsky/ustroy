@@ -21,7 +21,7 @@ import {
 } from '@/services/transformService'
 import { Companies } from '@/ui/companies/Companies'
 
-export const revalidate = 5 // Ревалидация каждый час (3600 секунд)
+export const revalidate = 5
 
 // ID константы
 const PAGE_ID = 'cG9zdDoxNQ=='
@@ -117,18 +117,11 @@ const HomePage = async () => {
       {posts && posts.length > 0 && <PostsCarousel posts={posts} />}
       {aboutBlock && <AboutBlock block={aboutBlock} />}
       {customersBlock && (
-        <section className="ind py-8 mt-8 overflow-x-hidden">
-          <div className="cont">
-            <h2 className="text-4xl font-bold mb-8 text-[#333]">
-              НАШИ ЗАКАЗЧИКИ
-            </h2>
-            <Companies
-              companies={transformCustomersFromPageSettings(
-                customersBlock.repeater,
-              )}
-            />
-          </div>
-        </section>
+        <Companies
+          companies={transformCustomersFromPageSettings(
+            customersBlock.repeater,
+          )}
+        />
       )}
       {calculateBlock && (
         <section className="ind mt-8">

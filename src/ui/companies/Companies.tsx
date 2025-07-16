@@ -46,27 +46,33 @@ export const Companies = ({ companies }: CompaniesProps) => {
   if (isMobile) {
     return (
       <FadeIn className="cont">
-        <div className="grid grid-cols-2 gap-4">
-          {companies.map((company) => (
-            <div
-              key={company.id}
-              className="bg-white rounded-box flex items-center justify-center"
-              style={{ height: 80 }}
-            >
-              <Image
-                src={company.src}
-                alt={company.alt}
-                width={company.width || 100}
-                height={company.height || 40}
-                style={{
-                  maxWidth: '100%',
-                  maxHeight: '100%',
-                  objectFit: 'contain',
-                }}
-              />
-            </div>
-          ))}
-        </div>
+        <section className="ind py-8 mt-8 overflow-x-hidden">
+          <h2 className="text-4xl font-bold mb-8 text-[#333] uppercase">
+            Наши заказчики
+          </h2>
+
+          <div className="grid grid-cols-2 gap-4">
+            {companies.map((company) => (
+              <div
+                key={company.id}
+                className="bg-white rounded-box flex items-center justify-center"
+                style={{ height: 80 }}
+              >
+                <Image
+                  src={company.src}
+                  alt={company.alt}
+                  width={company.width || 100}
+                  height={company.height || 40}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain',
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
       </FadeIn>
     )
   }
@@ -77,63 +83,68 @@ export const Companies = ({ companies }: CompaniesProps) => {
   const bottomRow = companies.slice(half)
 
   return (
-    <FadeIn className="flex flex-col gap-6 cont">
-      <div
-        ref={topRef}
-        className="flex gap-6 items-center overflow-visible justify-end pl-[var(--container-padding,theme(spacing.4))]"
-        style={{
-          transition: 'transform 0.2s linear',
-          transform: `translateX(${ROW_OFFSET}px)`,
-        }}
-      >
-        {topRow.map((company) => (
+    <section className="ind py-8 mt-8 overflow-x-hidden">
+      <FadeIn className="cont">
+        <h2 className="text-4xl font-bold mb-8 text-[#333]">НАШИ ЗАКАЗЧИКИ</h2>
+        <div className="flex flex-col gap-6">
           <div
-            key={company.id}
-            className="bg-white rounded-box flex items-center justify-center"
-            style={{ width: 205, height: 129 }}
+            ref={topRef}
+            className="flex gap-6 items-center overflow-visible justify-end pl-[var(--container-padding,theme(spacing.4))]"
+            style={{
+              transition: 'transform 0.2s linear',
+              transform: `translateX(${ROW_OFFSET}px)`,
+            }}
           >
-            <Image
-              src={company.src}
-              alt={company.alt}
-              width={company.width || 141}
-              height={company.height || 66}
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain',
-              }}
-            />
+            {topRow.map((company) => (
+              <div
+                key={company.id}
+                className="bg-white rounded-box flex items-center justify-center"
+                style={{ width: 205, height: 129 }}
+              >
+                <Image
+                  src={company.src}
+                  alt={company.alt}
+                  width={company.width || 141}
+                  height={company.height || 66}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain',
+                  }}
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div
-        ref={bottomRef}
-        className="flex gap-6 items-center overflow-visible justify-start pr-[var(--container-padding,theme(spacing.4))]"
-        style={{
-          transition: 'transform 0.2s linear',
-          transform: `translateX(-${ROW_OFFSET}px)`,
-        }}
-      >
-        {bottomRow.map((company) => (
           <div
-            key={company.id}
-            className="bg-white rounded-box flex items-center justify-center"
-            style={{ width: 205, height: 129 }}
+            ref={bottomRef}
+            className="flex gap-6 items-center overflow-visible justify-start pr-[var(--container-padding,theme(spacing.4))]"
+            style={{
+              transition: 'transform 0.2s linear',
+              transform: `translateX(-${ROW_OFFSET}px)`,
+            }}
           >
-            <Image
-              src={company.src}
-              alt={company.alt}
-              width={company.width || 141}
-              height={company.height || 66}
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain',
-              }}
-            />
+            {bottomRow.map((company) => (
+              <div
+                key={company.id}
+                className="bg-white rounded-box flex items-center justify-center"
+                style={{ width: 205, height: 129 }}
+              >
+                <Image
+                  src={company.src}
+                  alt={company.alt}
+                  width={company.width || 141}
+                  height={company.height || 66}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain',
+                  }}
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </FadeIn>
+        </div>
+      </FadeIn>
+    </section>
   )
 }
