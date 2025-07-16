@@ -31,6 +31,15 @@
 Блоговые страницы (посты, категории):
 
 - Маршрутизация: src/app/[...slug]/page.tsx (динамический catch-all роут)
+- Структура файлов:
+  - page.tsx - основной компонент страницы (минимальный код)
+  - types.ts - типы для страницы
+  - constants.ts - константы (revalidate время)
+  - components/
+    - PageRenderer.tsx - логика рендеринга страниц по slug
+  - utils/
+    - metadata.ts - генерация метаданных для SEO
+    - staticParams.ts - генерация статических параметров для ISR
 - SSR/ISR: данные подгружаются на сервере для SEO и OG, есть кеширование и revalidate
 - Компонент поста: src/components/CategoryPostPage.tsx (серверный), внутри — src/components/CategoryPostPageClient.tsx (клиентский, для client-side fetch)
   - Хлебные крошки вынесены в отдельный компонент: src/components/ui/Breadcrumbs.tsx
