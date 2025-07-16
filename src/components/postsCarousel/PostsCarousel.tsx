@@ -90,7 +90,6 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({ posts }) => {
         posts={posts}
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
-        className="mt-6"
       />
     </div>
   )

@@ -84,7 +84,7 @@ const Header: FC<HeaderProps> = ({
               <li key={index} className={cn(styles.item, 'md:text-center')}>
                 <Link
                   className={cn(
-                    'font-medium text-lg md:text-xl p-0 hover:text-base-200',
+                    'font-medium text-lg md:text-xl p-0 transition-colors duration-200  hover:text-base-200',
                     {
                       'text-primary': highlighting && item.uri === pathname,
                     },
@@ -121,9 +121,12 @@ const Header: FC<HeaderProps> = ({
           {menuItems.map((item, index) => (
             <li key={index} className={cn(styles.item, 'block')}>
               <Link
-                className={cn('font-medium text-lg p-0 hover:text-base-200', {
-                  'text-primary': highlighting && item.uri === pathname,
-                })}
+                className={cn(
+                  'font-medium text-lg p-0 transition-colors duration-200 hover:text-base-200',
+                  {
+                    'text-primary': highlighting && item.uri === pathname,
+                  },
+                )}
                 href={item.uri}
                 onClick={() => handleMenuItemClick(item.uri)}
               >
