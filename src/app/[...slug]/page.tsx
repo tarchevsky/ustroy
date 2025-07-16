@@ -192,13 +192,7 @@ export async function generateStaticParams() {
 
     // Добавляем страницы WordPress (исключаем главную и projects)
     const filteredPages = pages.filter((page) => {
-      if (
-        !page.slug ||
-        page.slug === 'home' ||
-        page.slug === 'glavnaya' ||
-        page.slug === 'projects' ||
-        page.slug === ''
-      ) {
+      if (!page.slug || page.slug === 'projects' || page.slug === '') {
         return false
       }
       return true
