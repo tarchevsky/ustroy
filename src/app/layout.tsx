@@ -33,6 +33,8 @@ export default async function RootLayout({
   const apolloClient = getApolloClient()
   const siteSettings = await fetchSiteSettings(apolloClient)
   const menuItems = await fetchMenuItems(apolloClient)
+  // Управление прилипанием header
+  const isHeaderSticky = true // поменяйте на true, чтобы включить прилипание
   return (
     <html lang="ru">
       <head>
@@ -51,6 +53,7 @@ export default async function RootLayout({
           vk={siteSettings.vk}
           instagram={siteSettings.instagram}
           menuItems={menuItems}
+          sticky={isHeaderSticky}
         />
         {children}
         <Footer

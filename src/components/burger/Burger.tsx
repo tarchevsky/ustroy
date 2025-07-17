@@ -2,7 +2,7 @@ import { BurgerProps } from '@/types'
 
 const Burger = ({ toggleMenu, isActive }: BurgerProps) => {
   return (
-    <label className="swap swap-rotate block md:hidden absolute inset-y-8 right-14 sm:right-20 cursor-pointer z-20 p-0 bg-transparent border-0 shadow-none">
+    <label className="swap swap-rotate block md:hidden absolute inset-y-3.5 right-14 sm:right-20 cursor-pointer z-20 p-0 bg-transparent border-0 shadow-none">
       <input
         type="checkbox"
         checked={isActive}
