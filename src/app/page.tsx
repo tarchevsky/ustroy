@@ -7,7 +7,6 @@ import { fetchSeoMetadata } from '@/lib/seo'
 import { fetchHomePageData } from '@/services/pageService'
 import { fetchPageSettings } from '@/services/pageSettingsService'
 
-import AboutBlock from '@/components/aboutBlock/AboutBlock'
 import { ConditionalRenderer } from '@/components/conditional/ConditionalRenderer'
 import Hero from '@/components/hero/Hero'
 import PostsCarousel from '@/components/postsCarousel/PostsCarousel'
@@ -99,7 +98,6 @@ const HomePage = async () => {
         />
       )}
       {posts && posts.length > 0 && <PostsCarousel posts={posts} />}
-      {aboutBlock && <AboutBlock block={aboutBlock} />}
       <ConditionalRenderer
         typesOfContent={typesOfContent}
         pagecontent={pagecontent}
