@@ -56,6 +56,7 @@ export default async function WpPageComponent({
       <ConditionalRenderer
         typesOfContent={typesOfContent}
         pagecontent={pageData.pagecontent}
+        posts={pageData.posts}
       />
 
       {/* Дочерние категории для страницы projects */}

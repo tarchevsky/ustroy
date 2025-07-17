@@ -122,6 +122,11 @@ export interface TypesOfContentChooseProjectPicturesLayout {
   }
 }
 
+export interface TypesOfContentChooseProjectCarouselLayout {
+  fieldGroupName: 'TypesOfContentChooseProjectCarouselLayout'
+  projectcarousel: boolean
+}
+
 export type TypesOfContentChoose =
   | TypesOfContentChooseHeroLayout
   | TypesOfContentChooseFeaturedProjectsLayout
@@ -129,6 +134,7 @@ export type TypesOfContentChoose =
   | TypesOfContentChooseCustomersLayout
   | TypesOfContentChooseCalculateLayout
   | TypesOfContentChooseProjectPicturesLayout
+  | TypesOfContentChooseProjectCarouselLayout
 
 export interface TypesOfContent {
   choose: TypesOfContentChoose[]

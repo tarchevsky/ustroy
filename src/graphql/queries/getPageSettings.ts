@@ -97,6 +97,10 @@ export const GET_PAGE_SETTINGS = gql`
             text
             btnText
           }
+          ... on TypesOfContentChooseProjectCarouselLayout {
+            fieldGroupName
+            projectcarousel
+          }
         }
       }
     }

@@ -77,6 +77,7 @@ export default function CategoryPostPageClient({
       <ConditionalRenderer
         typesOfContent={post.typesOfContent}
         pagecontent={undefined}
+        posts={posts}
       />
 
       <div className="cont px-[16px]">

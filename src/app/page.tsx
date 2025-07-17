@@ -9,7 +9,6 @@ import { fetchPageSettings } from '@/services/pageSettingsService'
 
 import { ConditionalRenderer } from '@/components/conditional/ConditionalRenderer'
 import Hero from '@/components/hero/Hero'
-import PostsCarousel from '@/components/postsCarousel/PostsCarousel'
 import {
   transformCategories,
   transformCategoryPosts,
@@ -86,7 +85,7 @@ const HomePage = async () => {
   )
 
   return (
-    <div>
+    <>
       {/* <TypesOfContentDebug data={typesOfContent} /> */}
       {heroBlock && (
         <Hero
@@ -97,12 +96,12 @@ const HomePage = async () => {
           buttonText="Обсудить проект"
         />
       )}
-      {posts && posts.length > 0 && <PostsCarousel posts={posts} />}
       <ConditionalRenderer
         typesOfContent={typesOfContent}
         pagecontent={pagecontent}
+        posts={posts}
       />
-    </div>
+    </>
   )
 }
 

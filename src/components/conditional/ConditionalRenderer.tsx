@@ -8,6 +8,7 @@ import {
 import { transformCustomersFromPageSettings } from '@/services/transformService'
 import { Companies } from '@/ui/companies/Companies'
 import AboutBlock from '../aboutBlock/AboutBlock'
+import PostsCarousel from '../postsCarousel/PostsCarousel'
 import TextWithButton from '../textWithButton/TextWithButton'
 
 interface ConditionalRendererProps {
@@ -17,11 +18,13 @@ interface ConditionalRendererProps {
   pagecontent?: {
     companies?: any[]
   }
+  posts?: any[]
 }
 
 export const ConditionalRenderer = ({
   typesOfContent,
   pagecontent,
+  posts,
 }: ConditionalRendererProps) => {
   if (!typesOfContent?.choose) return null
 
@@ -42,6 +45,14 @@ export const ConditionalRenderer = ({
             return <ConditionalTextWithButton key={index} block={block} />
           case 'TypesOfContentChooseAboutLayout':
             return <ConditionalAboutBlock key={index} block={block} />
+          case 'TypesOfContentChooseProjectCarouselLayout':
+            return (
+              <ConditionalPostsCarousel
+                key={index}
+                block={block}
+                posts={posts}
+              />
+            )
           default:
             return null
         }
@@ -122,6 +133,20 @@ const ConditionalAboutBlock = ({
     )
   ) {
     return <AboutBlock block={block} />
+  }
+  return null
+}
+
+// Компонент для PostsCarousel
+const ConditionalPostsCarousel = ({
+  block,
+  posts,
+}: {
+  block: { projectcarousel?: boolean }
+  posts?: any[]
+}) => {
+  if (block?.projectcarousel && posts && posts.length > 0) {
+    return <PostsCarousel posts={posts} />
   }
   return null
 }

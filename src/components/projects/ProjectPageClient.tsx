@@ -92,6 +92,7 @@ export default function ProjectPageClient({
       <ConditionalRenderer
         typesOfContent={typesOfContent}
         pagecontent={pagecontent}
+        posts={posts}
       />
 
       <div className="my-8">

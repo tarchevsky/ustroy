@@ -18,6 +18,10 @@ export const GET_CATEGORY_WITH_CHILDREN = gql`
           slug
           description
           count
+          ... on TypesOfContentChooseProjectCarouselLayout {
+            fieldGroupName
+            projectcarousel
+          }
         }
       }
       posts {

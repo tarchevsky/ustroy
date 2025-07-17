@@ -56,7 +56,11 @@ export default function CategoryPage({ categoryData }: CategoryPageProps) {
       </FadeIn>
 
       {/* Универсальный рендерер для условных блоков */}
-      <ConditionalRenderer typesOfContent={undefined} pagecontent={undefined} />
+      <ConditionalRenderer
+        typesOfContent={undefined}
+        pagecontent={undefined}
+        posts={categoryData.posts?.edges?.map((e: any) => e.node) || []}
+      />
 
       {/* Дочерние категории */}
       {childCategories.length > 0 && (

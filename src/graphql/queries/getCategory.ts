@@ -12,6 +12,10 @@ export const GET_CATEGORY = gql`
             slug
             title
             excerpt
+            ... on TypesOfContentChooseProjectCarouselLayout {
+              fieldGroupName
+              projectcarousel
+            }
           }
         }
       }
