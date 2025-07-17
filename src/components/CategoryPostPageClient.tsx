@@ -44,8 +44,10 @@ export default function CategoryPostPageClient({
     { name: 'Главная', href: '/' },
     { name: 'Проекты', href: '/projects' },
   ]
-  if (categorySlug && categorySlug !== 'projects') {
-    breadcrumbs.push({ name: categoryName, href: `/${categorySlug}` })
+  // Если категория — подкатегория проектов, ссылка должна быть /projects/категория
+  const isProjectCategory = categorySlug && categorySlug !== 'projects'
+  if (isProjectCategory) {
+    breadcrumbs.push({ name: categoryName, href: `/projects/${categorySlug}` })
   }
   breadcrumbs.push({ name: post.title })
 
@@ -58,7 +60,7 @@ export default function CategoryPostPageClient({
             <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
               <h1 className="text-3xl">{post.title}</h1>
               <Link
-                href={`/${category}`}
+                href={`/projects/${categorySlug}`}
                 className="btn btn-primary text-white border-2 hover:bg-white hover:text-primary text-xl font-normal btn-wide"
               >
                 {categoryName}

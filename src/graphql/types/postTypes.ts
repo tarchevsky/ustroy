@@ -1,3 +1,5 @@
+import { TypesOfContentChoose } from './pageSettingsTypes'
+
 export interface PostNode {
   id: string
   excerpt: string
@@ -52,7 +54,7 @@ export interface Post {
     metaDesc: string
   }
   typesOfContent?: {
-    choose?: any[]
+    choose?: TypesOfContentChoose[]
   }
   categories?: {
     edges: Array<{

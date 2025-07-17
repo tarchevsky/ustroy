@@ -67,7 +67,7 @@ export default function CategoryPage({ categoryData }: CategoryPageProps) {
               {childCategories.map((child: ChildCategory) => (
                 <Link
                   key={child.id}
-                  href={`/${child.slug}`}
+                  href={`/projects/${child.slug}`}
                   className="block p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors"
                 >
                   <h3 className="text-lg font-semibold mb-2">{child.name}</h3>

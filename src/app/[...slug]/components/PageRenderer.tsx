@@ -28,7 +28,20 @@ export async function renderPage({ slug }: PageRendererProps) {
       return <WpPageComponent pageData={pageData} />
     }
 
-    // Проверяем категорию с дочерними
+    // Проверяем, не является ли это подкатегорией проектов
+    const projectsCategory = await fetchCategoryWithChildren(
+      apolloClient,
+      'projects',
+    )
+    const isProjectChild = projectsCategory?.children?.nodes?.some(
+      (child: any) => child.slug === slug[0],
+    )
+    if (isProjectChild) {
+      // Если это подкатегория проектов, не рендерим по /child (404)
+      notFound()
+    }
+
+    // Проверяем категорию с дочерними (например, если появятся другие корневые категории)
     const categoryData = await fetchCategoryWithChildren(apolloClient, slug[0])
     if (categoryData) {
       console.log('✅ Найдена категория с дочерними:', categoryData.name)

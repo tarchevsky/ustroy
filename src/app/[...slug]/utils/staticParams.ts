@@ -49,11 +49,31 @@ export async function generateStaticParams() {
       }: {
         node: import('@/graphql/types/categoriesTypes').CategoryNode
       }) => {
-        if (categoriesWithPosts.has(category.slug)) {
+        // Не добавляем путь для подкатегорий projects (их slug совпадает с дочерними категориями projects)
+        if (
+          categoriesWithPosts.has(category.slug) &&
+          category.slug !== 'projects'
+        ) {
           paths.push({ slug: [category.slug] })
         }
       },
     )
+
+    // Добавляем подкатегории для projects
+    const { fetchCategoryWithChildren } = await import('@/services/pageService')
+    const projectsCategory = await fetchCategoryWithChildren(
+      apolloClient,
+      'projects',
+    )
+    if (
+      projectsCategory &&
+      projectsCategory.children &&
+      projectsCategory.children.nodes
+    ) {
+      projectsCategory.children.nodes.forEach((child: any) => {
+        paths.push({ slug: ['projects', child.slug] })
+      })
+    }
 
     // TODO: Добавить подкатегории и посты
     // Это потребует дополнительных запросов

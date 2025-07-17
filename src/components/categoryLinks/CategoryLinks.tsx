@@ -80,7 +80,7 @@ const CategoryLinks: React.FC<CategoryLinksProps> = ({
         {uniqueCategories.map((cat) => (
           <Link
             key={cat.slug}
-            href={`/${cat.slug}`}
+            href={`/projects/${cat.slug}`}
             className={`btn bg-white text-black border border-gray-200 whitespace-nowrap ${
               currentCategorySlug === cat.slug
                 ? 'btn-primary text-primary border-primary border-2'

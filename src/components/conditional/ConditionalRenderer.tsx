@@ -1,11 +1,13 @@
 'use client'
 
 import {
+  TypesOfContentChooseAboutLayout,
   TypesOfContentChooseCalculateLayout,
   TypesOfContentChooseCustomersLayout,
 } from '@/graphql/types/pageSettingsTypes'
 import { transformCustomersFromPageSettings } from '@/services/transformService'
 import { Companies } from '@/ui/companies/Companies'
+import AboutBlock from '../aboutBlock/AboutBlock'
 import TextWithButton from '../textWithButton/TextWithButton'
 
 interface ConditionalRendererProps {
@@ -38,6 +40,8 @@ export const ConditionalRenderer = ({
             )
           case 'TypesOfContentChooseCalculateLayout':
             return <ConditionalTextWithButton key={index} block={block} />
+          case 'TypesOfContentChooseAboutLayout':
+            return <ConditionalAboutBlock key={index} block={block} />
           default:
             return null
         }
@@ -94,6 +98,30 @@ const ConditionalTextWithButton = ({
 }) => {
   if (block) {
     return <TextWithButton text={block.text} btnText={block.btnText} />
+  }
+  return null
+}
+
+// Компонент для AboutBlock
+const ConditionalAboutBlock = ({
+  block,
+}: {
+  block: TypesOfContentChooseAboutLayout
+}) => {
+  if (
+    block?.grid &&
+    block.grid.some(
+      (row) =>
+        row &&
+        typeof row.heading === 'string' &&
+        typeof row.subtitle === 'string' &&
+        row.img &&
+        row.img.node &&
+        typeof row.img.node.sourceUrl === 'string' &&
+        row.img.node.sourceUrl.length > 0,
+    )
+  ) {
+    return <AboutBlock block={block} />
   }
   return null
 }

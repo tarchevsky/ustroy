@@ -67,6 +67,56 @@ export const GET_POST_BY_SLUG = gql`
               }
             }
           }
+          ... on TypesOfContentChooseAboutLayout {
+            fieldGroupName
+            grid {
+              ... on TypesOfContentChooseGridCenterLayout {
+                fieldGroupName
+                heading
+                img {
+                  node {
+                    altText
+                    sourceUrl
+                  }
+                }
+                imgMiniOne {
+                  node {
+                    altText
+                    sourceUrl
+                  }
+                }
+                imgMiniTwo {
+                  node {
+                    altText
+                    sourceUrl
+                  }
+                }
+                subtitle
+              }
+              ... on TypesOfContentChooseGridLeftToRightLayout {
+                fieldGroupName
+                heading
+                img {
+                  node {
+                    altText
+                    sourceUrl
+                  }
+                }
+                subtitle
+              }
+              ... on TypesOfContentChooseGridRightToLeftLayout {
+                fieldGroupName
+                heading
+                subtitle
+                img {
+                  node {
+                    altText
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
         }
       }
       categories {

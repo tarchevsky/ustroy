@@ -40,7 +40,7 @@ const PhotoTiles = ({ tiles, imageData }: PhotoTilesComponentProps) => {
           return (
             <Link
               key={tile.id}
-              href={`/${tile.slug}`}
+              href={`/projects/${tile.slug}`}
               className="relative block h-48 rounded-lg overflow-hidden hover:shadow-lg transition-shadow group"
             >
               <div className="relative w-full h-full">
