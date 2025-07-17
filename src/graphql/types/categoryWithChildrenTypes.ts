@@ -20,6 +20,17 @@ export interface CategoryPost {
   }
 }
 
+export interface TypesOfContentChooseProjectCarouselLayout {
+  fieldGroupName: 'TypesOfContentChooseProjectCarouselLayout'
+  projectcarousel: boolean
+}
+
+export type TypesOfContentChoose = TypesOfContentChooseProjectCarouselLayout // можно расширить, если появятся другие блоки
+
+export interface TypesOfContent {
+  choose: TypesOfContentChoose[]
+}
+
 export interface CategoryWithChildren {
   id: string
   name: string
@@ -37,6 +48,7 @@ export interface CategoryWithChildren {
       node: CategoryPost
     }>
   }
+  typesOfContent?: TypesOfContent
 }
 
 export interface CategoryWithChildrenData {

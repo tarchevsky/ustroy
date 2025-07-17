@@ -9,6 +9,29 @@ interface CategoryPageProps {
   categoryData: any
 }
 
+function transformPostsForCarousel(posts: any[]) {
+  return posts.map((post) => {
+    const mainCategory = post.categories?.edges[0]?.node?.slug
+    // Приводим featuredImage к ожидаемому виду
+    let featuredImage = post.featuredImage
+    if (featuredImage?.node?.sourceUrl) {
+      featuredImage = {
+        node: {
+          link: featuredImage.node.sourceUrl,
+          altText: featuredImage.node.altText || '',
+        },
+      }
+    }
+    return {
+      ...post,
+      featuredImage,
+      path: mainCategory
+        ? `/projects/${mainCategory}/${post.slug}`
+        : `/projects/${post.slug}`,
+    }
+  })
+}
+
 export default function CategoryPage({ categoryData }: CategoryPageProps) {
   console.log('🔍 CategoryPage получила данные:', categoryData)
 
@@ -57,9 +80,13 @@ export default function CategoryPage({ categoryData }: CategoryPageProps) {
 
       {/* Универсальный рендерер для условных блоков */}
       <ConditionalRenderer
-        typesOfContent={undefined}
+        typesOfContent={categoryData.typesOfContent}
         pagecontent={undefined}
-        posts={categoryData.posts?.edges?.map((e: any) => e.node) || []}
+        posts={
+          categoryData.allPostsForParent
+            ? transformPostsForCarousel(categoryData.allPostsForParent)
+            : categoryData.posts?.edges?.map((e: any) => e.node) || []
+        }
       />
 
       {/* Дочерние категории */}

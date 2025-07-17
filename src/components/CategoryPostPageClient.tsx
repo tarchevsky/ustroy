@@ -17,6 +17,28 @@ interface CategoryPostPageClientProps {
   slug: string
 }
 
+function transformPostsForCarousel(posts: any[]) {
+  return posts.map((post) => {
+    const mainCategory = post.categories?.edges[0]?.node?.slug
+    let featuredImage = post.featuredImage
+    if (featuredImage?.node?.link) {
+      featuredImage = {
+        node: {
+          link: featuredImage.node.link,
+          altText: featuredImage.node.altText || '',
+        },
+      }
+    }
+    return {
+      ...post,
+      featuredImage,
+      path: mainCategory
+        ? `/projects/${mainCategory}/${post.slug}`
+        : `/projects/${post.slug}`,
+    }
+  })
+}
+
 export default function CategoryPostPageClient({
   initialData,
   category,
@@ -77,7 +99,7 @@ export default function CategoryPostPageClient({
       <ConditionalRenderer
         typesOfContent={post.typesOfContent}
         pagecontent={undefined}
-        posts={posts}
+        posts={transformPostsForCarousel(posts)}
       />
 
       <div className="cont px-[16px]">

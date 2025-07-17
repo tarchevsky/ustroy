@@ -57,10 +57,34 @@ export async function renderPage({ slug }: PageRendererProps) {
       notFound()
     }
 
+    // Получаем родительскую категорию (projects)
+    const parentCategory = await fetchCategoryWithChildren(
+      apolloClient,
+      slug[0],
+    )
+    // Получаем текущую подкатегорию
     const categoryData = await fetchCategoryWithChildren(apolloClient, slug[1])
-    if (categoryData) {
-      console.log('✅ Найдена подкатегория:', categoryData.name)
-      return <CategoryPage categoryData={categoryData} />
+
+    if (parentCategory && categoryData) {
+      // Собираем id всех подкатегорий и родителя
+      const allCategoryIds = [
+        parentCategory.id,
+        ...(parentCategory.children?.nodes?.map((c: any) => c.id) || []),
+      ]
+      // Получаем все посты по этим категориям
+      const { data } = await apolloClient.query({
+        query: require('@/graphql/queries/getPostsByCategories')
+          .GET_POSTS_BY_CATEGORIES,
+        variables: { categoryIds: allCategoryIds },
+      })
+      const allPostsForParent = data.posts.edges.map((e: any) => e.node)
+      console.log(
+        '✅ Все посты под родительской категорией:',
+        allPostsForParent.length,
+      )
+      return (
+        <CategoryPage categoryData={{ ...categoryData, allPostsForParent }} />
+      )
     }
   }
 
