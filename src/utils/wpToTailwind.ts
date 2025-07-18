@@ -19,8 +19,10 @@ const classMap: Record<string, string> = {
   'alignfull': 'w-full',
   // Пользовательские секции и колонки
   'is-style-section-2': 'bg-gray-50 p-6 rounded-lg shadow-sm',
-  'is-layout-flow': 'flex flex-col gap-4',
-  'wp-block-column-is-layout-flow': 'flex flex-col gap-3',
+  // 'is-layout-flow': 'flex flex-col gap-4',
+  'is-layout-flow': 'flex flex-col gap-6',
+  // 'wp-block-column-is-layout-flow': 'flex flex-col gap-3',
+  'wp-block-column-is-layout-flow': 'flex flex-col',
   'is-style-section-2--1': 'bg-blue-50 p-6 rounded-lg border border-blue-100',
   'is-layout-flex': 'flex flex-wrap gap-4',
   'wp-container-core-columns-is-layout-1':
@@ -38,7 +40,7 @@ const classMap: Record<string, string> = {
   'wp-block-cover': 'relative py-12 bg-cover bg-center',
 
   // Медиа блоки
-  'wp-block-image': 'my-8',
+  'wp-block-image': 'my-0',
   'wp-block-gallery': 'grid grid-cols-2 md:grid-cols-3 gap-4 my-8',
   'wp-block-video': 'my-8',
   'wp-block-audio': 'my-6',
@@ -67,7 +69,7 @@ const classMap: Record<string, string> = {
   // Цитаты и разделители
   'wp-block-quote': 'pl-4 border-l-4 border-gray-300 italic my-8',
   'wp-block-separator': 'border-t my-8',
-  'wp-block-spacer': 'my-8',
+  // 'wp-block-spacer': 'my-8',
 
   // Цвета и фоны
   'has-background': 'p-4',
@@ -134,11 +136,30 @@ export const wpToTailwind = (content: string): string => {
   Object.entries(allClassMaps).forEach(([wpClass, tailwindClass]) => {
     if (!tailwindClass) return // Пропускаем пустые соответствия
 
-    const regex = new RegExp(`class="([^"]*?)${wpClass}([^"]*?)"`, 'g')
+    const regex = new RegExp(`class="([^\"]*?)${wpClass}([^\"]*?)"`, 'g')
     transformedContent = transformedContent.replace(regex, (match, p1, p2) => {
       return `class="${p1}${tailwindClass}${p2}"`
     })
   })
+
+  // Добавляем rounded-box ко всем img, если его нет
+  // 1. Если есть class="...", но нет rounded-box
+  transformedContent = transformedContent.replace(
+    /<img([^>]*?)class="([^"]*?)"/g,
+    (match, before, classes) => {
+      if (classes.includes('rounded-box')) return match
+      return `<img${before}class="${classes} rounded-box"`
+    },
+  )
+  // 2. Если нет class вообще
+  transformedContent = transformedContent.replace(
+    /<img((?!class=)[^>])*?>/g,
+    (match, before) => {
+      // Проверяем, что нет class вообще
+      if (/class\s*=/.test(match)) return match
+      return match.replace('<img', '<img class="rounded-box"')
+    },
+  )
 
   return transformedContent
 }

@@ -1,8 +1,10 @@
 'use client'
+import { wpToTailwind } from '@/utils/wpToTailwind'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import CategoryLinks from './categoryLinks/CategoryLinks'
 import { ConditionalRenderer } from './conditional/ConditionalRenderer'
+import ContentBlock from './contentBlock/ContentBlock'
 import { useCategoryPostData } from './hooks/useCategoryPostData'
 import ProjectPicturesGrid from './projects/ProjectPicturesGrid'
 import { Breadcrumbs } from './ui/Breadcrumbs'
@@ -95,20 +97,9 @@ export default function CategoryPostPageClient({
         </main>
       </div>
 
-      {/* Универсальный рендерер для условных блоков */}
-      <ConditionalRenderer
-        typesOfContent={post.typesOfContent}
-        pagecontent={undefined}
-        posts={transformPostsForCarousel(posts)}
-      />
-
       <div className="cont px-[16px]">
         <section className="prose max-w-full">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: post.content,
-            }}
-          />
+          <ContentBlock content={wpToTailwind(post.content)} />
         </section>
         {projectPicturesBlock && (
           <ProjectPicturesGrid
@@ -119,6 +110,13 @@ export default function CategoryPostPageClient({
           />
         )}
       </div>
+
+      {/* Универсальный рендерер для условных блоков */}
+      <ConditionalRenderer
+        typesOfContent={post.typesOfContent}
+        pagecontent={undefined}
+        posts={transformPostsForCarousel(posts)}
+      />
 
       <section className="ind">
         <CategoryLinks

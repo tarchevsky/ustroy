@@ -3,9 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 /**
  * API-роут для вебхуков из WordPress для автоматической ревалидации
- *
- * Вебхук нужно настроить в WordPress для вызова этого URL при обновлении контента
- * Например, можно использовать плагин WP Webhooks
+ * Используем плагин WP Webhooks
  */
 export async function POST(request: NextRequest) {
   try {

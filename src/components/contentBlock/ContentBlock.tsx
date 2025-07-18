@@ -4,12 +4,10 @@ interface ContentBlockProps {
 
 const ContentBlock = ({ content }: ContentBlockProps) => {
   return (
-    <div className="cont">
-      <div
-        className="prose prose-lg max-w-none"
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
-    </div>
+    <div
+      // className="prose prose-lg max-w-none"
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
   )
 }
 
