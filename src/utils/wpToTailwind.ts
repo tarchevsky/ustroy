@@ -131,6 +131,7 @@ export const extractTailwindClasses = (): string[] => {
 export const tailwindSafelist = extractTailwindClasses()
 
 export const wpToTailwind = (content: string): string => {
+  if (!content) return ''
   let transformedContent = content
 
   Object.entries(allClassMaps).forEach(([wpClass, tailwindClass]) => {
